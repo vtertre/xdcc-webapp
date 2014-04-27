@@ -1,0 +1,15 @@
+{
+    "locale": "Français",
+    "app": {
+        "angularLocale" : "francais",
+        "title": {
+            "global": "xdcc-webapp"
+        },
+        "home": {
+          "pitch": "xdcc-webapp"
+        },
+        "menu": {
+          "home":"Accueil"
+        }
+    }
+}

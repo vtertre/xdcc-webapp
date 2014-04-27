@@ -1,0 +1,16 @@
+{
+    "locale": "English",
+    "app": {
+        "angularLocale" : "anglais",
+
+        "title": {
+            "global": "xdcc-webapp"
+        },
+        "home": {
+          "pitch": "xdcc-webapp"
+        },
+        "menu": {
+          "home":"Home"
+        }
+    }
+}
