@@ -1,0 +1,17 @@
+<div class="page-header">
+  <h3>Available files of {{bot.name}}</h3>
+</div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <input class="form-control" type="text" placeholder="Search a file" ng-model="fileFilter"/>
+  </div>
+
+  <div class="col-md-8 col-md-offset-2" style="padding-top: 20px;">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info" ng-repeat="file in bot.fileSet | filter:fileFilter">
+        {{file.name}}
+        <span class="badge">{{file.packId}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

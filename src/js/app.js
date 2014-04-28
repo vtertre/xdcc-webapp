@@ -5,8 +5,12 @@
       console.log($routeProvider);
       $routeProvider
         .when("/index", {
-          controller: 'BotsController',
+          controller: 'BotListController',
           templateUrl: "/templates/index.html"
+        })
+        .when("/bot/:id", {
+          controller: 'BotController',
+          templateUrl: "/templates/bot.html"
         })
         .otherwise({
           redirectTo: '/index'
