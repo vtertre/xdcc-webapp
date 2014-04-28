@@ -1,14 +1,15 @@
 (function (angular) {
   'use strict';
-  angular.module("app", ['ngResource', 'ngRoute', 'configuration', 'common'])
+  angular.module("app", ['ngResource', 'ngRoute', 'configuration', 'bot', 'common'])
     .config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
       console.log($routeProvider);
       $routeProvider
-        .when("/", {
+        .when("/index", {
+          controller: 'BotsController',
           templateUrl: "/templates/index.html"
         })
         .otherwise({
-          redirectTo: '/'
+          redirectTo: '/index'
         });
       $httpProvider.interceptors.push('ConfigurationInterceptor');
     }])
