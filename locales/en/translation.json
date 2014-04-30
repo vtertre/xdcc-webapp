@@ -10,7 +10,7 @@
           "pitch": "xdcc-webapp"
         },
         "menu": {
-          "home":"Home"
+          "bots":"Bots"
         }
     }
 }

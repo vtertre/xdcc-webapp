@@ -2,14 +2,14 @@
   {{errors.content}}
 </div>
 <div class="page-header">
-  <h3>Saved senders</h3>
+  <h3>Registered bots</h3>
 </div>
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3 search-field">
     <input class="form-control" type="text" placeholder="Search a bot" ng-model="titleFilter"/>
   </div>
 
-  <div class="col-md-6 col-md-offset-3" style="padding-top: 20px;">
+  <div class="col-md-6 col-md-offset-3">
     <ul class="list-group">
       <li class="list-group-item" ng-repeat="bot in bots | filter:titleFilter | orderBy:'name'">
         <a href="#/bot/{{bot.id}}">
