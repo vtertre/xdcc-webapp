@@ -14,6 +14,7 @@ describe("BotListController", function () {
     bots.getAll.andReturn(botCollection);
     controller = $controller('BotListController', {
       $scope: $scope,
+      $route: {},
       Bots: bots
     });
   }));
