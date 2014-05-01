@@ -7,15 +7,12 @@
     <input class="form-control" type="text" placeholder="Search a bot" ng-model="titleFilter"/>
   </div>
 
-  <div class="col-md-6 col-md-offset-3">
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="bot in bots | filter:titleFilter | orderBy:'name'">
-        <a href="#/bot/{{bot.id}}">
-          {{bot.name}}
-        </a>
-        <span>{{bot.lastChecked | lastCheckedTime:currentDate}}</span>
-        <span class="badge">{{bot.fileCount}}</span>
-      </li>
-    </ul>
+  <div class="col-md-6 col-md-offset-3 list-group">
+    <a class="list-group-item" ng-repeat="bot in bots | filter:titleFilter | orderBy:'name'"
+       href="#/bot/{{bot.id}}" ng-class="{'list-group-item-warning':hasNotBeenCheckedRecently(bot.lastChecked)}">
+      {{bot.name}}
+      <span class="badge">{{bot.fileCount}}</span>
+      <span class="checked-time">{{bot.lastChecked | lastCheckedTime:currentDate}}</span>
+    </a>
   </div>
 </div>

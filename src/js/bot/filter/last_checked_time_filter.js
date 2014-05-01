@@ -2,28 +2,26 @@
   'use strict';
 
   angular.module('bot')
-    .filter('lastCheckedTime', function () {
+    .filter('lastCheckedTime', ['botService', function (botService) {
       return function(lastCheckedTime, currentDate) {
-        var inputDate = new Date(lastCheckedTime);
-        var output, hoursSinceUpdate, minutesSinceUpdate, secondsSinceUpdate;
+        var output;
+        var timeRepresentation = botService.getTimeDiff(lastCheckedTime, currentDate);
 
-        if (inputDate.getTime() > currentDate.getTime() || inputDate.getTime() === 0) {
-          return '(n/a)';
+        if (!timeRepresentation.viable) {
+          return 'n/a';
         }
 
-        secondsSinceUpdate = Math.floor((currentDate.getTime() - inputDate.getTime()) / 1000);
-        minutesSinceUpdate = Math.floor(secondsSinceUpdate / 60);
-        hoursSinceUpdate = Math.floor(minutesSinceUpdate / 60);
-
-        if (hoursSinceUpdate > 0) {
-          output = hoursSinceUpdate + 'h';
-        } else if (hoursSinceUpdate === 0 && minutesSinceUpdate > 0) {
-          output = minutesSinceUpdate + 'm';
+        if (timeRepresentation.days > 0) {
+          output = timeRepresentation.days + 'days';
+        } else if (timeRepresentation.days === 0 && timeRepresentation.hours > 0) {
+          output = timeRepresentation.hours + 'h';
+        } else if (timeRepresentation.hours === 0 && timeRepresentation.minutes > 0) {
+          output = timeRepresentation.minutes + 'min';
         } else {
-          output = secondsSinceUpdate + 's';
+          output = timeRepresentation.seconds + 's';
         }
 
-        return '(' + output + '  ago)';
+        return output + ' ago';
       };
-    });
+    }]);
 })(angular);

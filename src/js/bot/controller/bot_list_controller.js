@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('bot')
-    .controller('BotListController', ['$scope', '$route', 'Bots', function ($scope, $route, Bots) {
+    .controller('BotListController', ['$scope', '$route', 'Bots', 'botService', function ($scope, $route, Bots, botService) {
       $scope.currentDate = new Date();
       $scope.errors = {
         show: false,
@@ -20,6 +20,11 @@
 
       $scope.refreshList = function () {
         $route.reload();
+      };
+
+      $scope.hasNotBeenCheckedRecently = function (time) {
+        var timeRepresentation = botService.getTimeDiff(time, $scope.currentDate);
+        return (timeRepresentation.viable && timeRepresentation.hours > 8);
       };
     }]);
 })(angular);
