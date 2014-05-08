@@ -9,7 +9,7 @@ describe("BotController", function () {
 
   beforeEach(inject(function ($rootScope, $controller) {
     $scope = $rootScope.$new();
-    $routeParams = {};
+    $routeParams = { id: 1 };
     bots = jasmine.createSpyObj("resource", ['get']);
     bots.get.andReturn(bot);
     controller = $controller('BotController', {
@@ -24,7 +24,7 @@ describe("BotController", function () {
   });
 
   it("asks the api for the selected bot", function () {
-    expect(bots.get).toHaveBeenCalled();
+    expect(bots.get).toHaveBeenCalledWith({id: $routeParams.id});
   });
 
   it("passes the bot to the view", function () {
