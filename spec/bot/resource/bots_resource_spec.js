@@ -20,7 +20,7 @@ describe("Bots", function () {
     httpBackend.when('GET', '/bot/2').respond(botCollection[1]);
   }));
 
-  afterEach(function() {
+  afterEach(function () {
     httpBackend.verifyNoOutstandingExpectation();
     httpBackend.verifyNoOutstandingRequest();
   });
