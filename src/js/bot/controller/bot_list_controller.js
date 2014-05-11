@@ -9,6 +9,7 @@
         content: ''
       };
       $scope.bots = Bots.getAll(
+        // TODO Dunno how to test this
         function () {
           $scope.errors.show = false;
         },
