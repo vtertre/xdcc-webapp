@@ -1,4 +1,4 @@
-describe("Bots", function () {
+describe("botService", function () {
   'use strict';
 
   var service;
