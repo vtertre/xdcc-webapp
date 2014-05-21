@@ -25,7 +25,7 @@
 
       $scope.hasNotBeenCheckedRecently = function (time) {
         var timeRepresentation = botService.getTimeDiff(time, $scope.currentDate);
-        return (timeRepresentation.viable && timeRepresentation.hours >= 8);
+        return (timeRepresentation.viable && timeRepresentation.hours >= 6);
       };
     }]);
 })(angular);
