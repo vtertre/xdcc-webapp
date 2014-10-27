@@ -15,9 +15,9 @@ describe("Bots", function () {
     httpBackend = $httpBackend;
     BotsResource = Bots;
 
-    httpBackend.when('GET', '/bot').respond(botCollection);
-    httpBackend.when('GET', '/bot/1').respond(botCollection[0]);
-    httpBackend.when('GET', '/bot/2').respond(botCollection[1]);
+    httpBackend.when('GET', '/api/bot').respond(botCollection);
+    httpBackend.when('GET', '/api/bot/1').respond(botCollection[0]);
+    httpBackend.when('GET', '/api/bot/2').respond(botCollection[1]);
   }));
 
   afterEach(function () {
@@ -26,7 +26,7 @@ describe("Bots", function () {
   });
 
   it('gets an array when getAll is called', function () {
-    httpBackend.expectGET('/bot');
+    httpBackend.expectGET('/api/bot');
     var bots = BotsResource.getAll();
     httpBackend.flush();
 
@@ -34,7 +34,7 @@ describe("Bots", function () {
   });
 
   it('retrieves all the bots when getAll is called', function () {
-    httpBackend.expectGET('/bot');
+    httpBackend.expectGET('/api/bot');
     var bots = BotsResource.getAll();
     httpBackend.flush();
 
@@ -45,7 +45,7 @@ describe("Bots", function () {
   });
 
   it('returns an object when an id is specified', function () {
-    httpBackend.expectGET('/bot/1');
+    httpBackend.expectGET('/api/bot/1');
     var bot = BotsResource.get({id: 1});
     httpBackend.flush();
 
@@ -53,7 +53,7 @@ describe("Bots", function () {
   });
 
   it('retrieves the bot matching the given id', function () {
-    httpBackend.expectGET('/bot/1');
+    httpBackend.expectGET('/api/bot/1');
     var bot = BotsResource.get({id: botCollection[0].id});
     httpBackend.flush();
 

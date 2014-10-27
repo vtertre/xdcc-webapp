@@ -1,6 +1,10 @@
 var express = require("express"),
-  path = require('path'),
-  i18n = require('i18next');
+    path = require('path'),
+    i18n = require('i18next');
+var cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
+var serveStatic = require('serve-static');
+var proxy = require('express-http-proxy');
 
 
 var app = express();
@@ -9,38 +13,42 @@ var app = express();
 console.log("Configuration de l'application pour l'environnement " + app.get('env'));
 
 i18n.init({
-  ignoreRoutes: ['public/'],
-  fallbackLng: 'en'
+    ignoreRoutes: ['public/'],
+    fallbackLng: 'en',
+    detectLngFromHeaders: true
 });
 
+if ('development' === app.get('env')) {
+    app.set('urlApi', 'http://localhost:8089');
+}
 
-app.configure('development', function () {
-  app.use(express.logger('dev'));
-  app.locals.urlApi = 'http://localhost:8089';
+if ('production' === app.get('env')) {
+    app.set('urlApi', process.env.API_URL);
+}
 
-});
+app.use('/api', proxy(app.get('urlApi'), {
+    forwardPath: function(req, res) {
+        return require('url').parse(req.url).path;
+    }
+}));
 
-app.configure('production', function () {
-  app.locals.urlApi = process.env.API_URL;
-});
 
-app.configure(function () {
-  app.use(express.logger());
-  app.use(express.cookieParser());
-  app.use(express.bodyParser());
-  app.use(i18n.handle);
-  app.set('views', path.join(__dirname, '/views'));
-  app.set('view engine', 'jade');
-  app.use(express.methodOverride());
-  app.use(express.static(__dirname + '/public/'));
-  app.use(express.errorHandler());
-});
+app.use(i18n.handle);
+app.use(cookieParser());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.text({limit: '50mb'}));
+app.use(require("connect-assets")({paths: ["assets/js", "assets/css", "public/bower_components"]}));
+app.set('views', path.join(__dirname, '/views'));
+app.set('view engine', 'jade');
+
+app.use(serveStatic(__dirname + '/public/'));
 
 require('./routes')(app);
 
 i18n.registerAppHelper(app);
 
+
 var port = process.env.PORT || 5000;
 app.listen(port, function () {
-  console.log("Écoute sur le port " + port);
+    console.log("Écoute sur le port " + port);
 });

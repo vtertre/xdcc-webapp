@@ -4,5 +4,6 @@ exports.index = function (req, res) {
 
   res.render('index', {
     clazz: 'home',
-    title: i18n.t("app.title.global")});
+    title: i18n.t("app.title.global")
+  });
 };

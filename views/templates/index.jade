@@ -1,0 +1,12 @@
+.alert.alert-danger(ng-show="errors.show")
+   | {{errors.content}}
+.row(ng-show="bots.$resolved && !errors.show")
+   a.btn.btn-primary(ng-click="refreshList()") Refresh
+   .col-md-6.col-md-offset-3.search-field
+      input.form-control(type="text" placeholder="Search a bot" ng-model="titleFilter")
+   .col-md-6.col-md-offset-3.list-group
+      a.list-group-item(ng-repeat="bot in bots | filter:titleFilter | orderBy:'name'", ng-href="#/bot/{{bot.id}}",
+      ng-class="{'list-group-item-warning':hasNotBeenCheckedRecently(bot.lastChecked)}")
+         | {{bot.name}}
+         span.badge {{bot.fileCount}}
+         span.checked-time {{bot.lastChecked | lastCheckedTime:currentDate}}

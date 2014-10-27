@@ -1,3 +1,8 @@
+//= require ../_module.js
+//= require ../resource/bots_resource.js
+//= require ../service/bot_service.js
+//= require ../filter/last_checked_time_filter.js
+
 (function (angular) {
   'use strict';
 

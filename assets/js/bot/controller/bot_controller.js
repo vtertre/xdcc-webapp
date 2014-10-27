@@ -1,3 +1,6 @@
+//= require ../_module.js
+//= require ../resource/bots_resource.js
+
 (function (angular) {
   'use strict';
 

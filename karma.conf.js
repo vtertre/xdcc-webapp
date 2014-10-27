@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Tue Sep 03 2013 07:47:25 GMT+0200 (CEST)
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
@@ -19,8 +19,8 @@ module.exports = function (config) {
       'public/bower_components/angular-resource/angular-resource.js',
       'public/bower_components/angular-sanitize/angular-sanitize.js',
       'public/bower_components/angular-mocks/angular-mocks.js',
-      'src/js/**/*.js',
-      'spec/**/*.js'
+      'public/bower_components/angular-bootstrap/ui-bootstrap.js',
+      'assets/js/**/*.js'
     ],
 
 
