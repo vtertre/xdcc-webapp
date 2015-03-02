@@ -1,0 +1,8 @@
+extends include/layout
+block content
+  .content
+    div(ng-app='xdcc')
+      ng-view
+
+block js
+  script(src=revision("/genere/js/xdcc_app.js"))

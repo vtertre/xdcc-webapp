@@ -1,16 +1,16 @@
 {
-    "locale": "English",
-    "app": {
-        "angularLocale" : "anglais",
-
-        "title": {
-            "global": "xdcc-webapp"
-        },
-        "home": {
-          "pitch": "xdcc-webapp"
-        },
-        "menu": {
-          "bots":"Bots"
-        }
+  "locale": "English",
+  "app": {
+    "angularLocale": "anglais",
+    "title": {
+      "global": "xdcc-webapp"
+    },
+    "home": {
+      "pitch": "Download files easily from "
+    },
+    "menu": {
+      "bots": "Bots",
+      "login": "Log in"
     }
+  }
 }

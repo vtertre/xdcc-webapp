@@ -1,54 +1,64 @@
+"use strict";
+
 var express = require("express"),
-    path = require('path'),
-    i18n = require('i18next');
-var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
-var serveStatic = require('serve-static');
+  path = require("path"),
+  i18n = require("i18next"),
+  http = require("http");
+var morgan = require("morgan");
+var serveStatic = require("serve-static");
+var revision = require("./revision");
 var proxy = require('express-http-proxy');
 
-
 var app = express();
+var server = http.createServer(app);
+var io = require("socket.io").listen(server);
 
-
-console.log("Configuration de l'application pour l'environnement " + app.get('env'));
+console.log("Configuring application for environment: " + app.get("env"));
 
 i18n.init({
-    ignoreRoutes: ['public/'],
-    fallbackLng: 'en',
-    detectLngFromHeaders: true
+  ignoreRoutes: ['public/'],
+  fallbackLng: 'en',
+  detectLngFromHeaders: true
 });
 
-if ('development' === app.get('env')) {
-    app.set('urlApi', 'http://localhost:8089');
+if ("development" === app.get("env")) {
+  app.locals.apiUrl = "http://localhost:8089";
+  app.use(morgan("combined"));
 }
 
-if ('production' === app.get('env')) {
-    app.set('urlApi', process.env.API_URL);
+if ("staging" === app.get("env")) {
+  revision.initMap(require("./public/genere/map.json"));
+  app.locals.apiUrl = "";
 }
 
-app.use('/api', proxy(app.get('urlApi'), {
-    forwardPath: function(req, res) {
-        return require('url').parse(req.url).path;
-    }
+if ("production" === app.get("env")) {
+  revision.initMap(require("./public/genere/map.json"));
+  app.locals.apiUrl = "";
+}
+
+app.use('/api', proxy(app.locals.apiUrl, {
+  forwardPath: function (req, res) {
+    return require('url').parse(req.url).path;
+  }
 }));
 
+i18n.serveClientScript(app)
+  .serveDynamicResources(app);
 
 app.use(i18n.handle);
-app.use(cookieParser());
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.text({limit: '50mb'}));
-app.use(require("connect-assets")({paths: ["assets/js", "assets/css", "public/bower_components"]}));
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'jade');
 
-app.use(serveStatic(__dirname + '/public/'));
+app.set("views", path.join(__dirname, "/views"));
+app.set("view engine", "jade");
+app.use(serveStatic(__dirname + "/public/"));
 
-require('./routes')(app);
+require("./routes")(app);
 
+revision.registerHelper(app);
 i18n.registerAppHelper(app);
 
+require("./lib/connect")(io);
 
 var port = process.env.PORT || 5000;
-app.listen(port, function () {
-    console.log("Écoute sur le port " + port);
+server.listen(port, function () {
+  console.log("Listening on port " + port);
 });
