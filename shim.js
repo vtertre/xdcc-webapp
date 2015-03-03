@@ -20,13 +20,13 @@ module.exports = {
       "jquery": "jQuery"
     }
   },
-  "angular-bootstrap": {
+  /*"angular-bootstrap": {
     "depends": {
       "angular": "angular",
       "bootstrap": null
     },
     "exports": "angular.module('ui.bootstrap').name"
-  },
+  },*/
   "angular-socket-io": {
     "depends": {
       "angular": "angular"
