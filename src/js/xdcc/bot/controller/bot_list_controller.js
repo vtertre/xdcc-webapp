@@ -3,8 +3,7 @@
 module.exports = BotListController;
 
 /* @ngInject */
-function BotListController($scope, $route, Bots, socket) {
-  $scope.uuid = "bobby";
+function BotListController($rootScope, $scope, $route, Bots, socket) {
   $scope.currentDate = new Date();
   $scope.errors = {
     show: false,
@@ -25,10 +24,8 @@ function BotListController($scope, $route, Bots, socket) {
     $route.reload();
   };
 
-  /*$scope.hasNotBeenCheckedRecently = function (time) {
-    var timeRepresentation = BotService.getTimeDiff(time, $scope.currentDate);
-    return (timeRepresentation.viable && timeRepresentation.hours >= 6);
-  };*/
-
-  socket.emit("connect-client", $scope.uuid);
+  socket.emit("createSession", $scope.uuid);
+  socket.on("sessionId", function (sessionId) {
+    $rootScope.sessionId = sessionId;
+  });
 }

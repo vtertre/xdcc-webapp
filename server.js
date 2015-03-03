@@ -56,9 +56,9 @@ require("./routes")(app);
 revision.registerHelper(app);
 i18n.registerAppHelper(app);
 
-require("./lib/connect")(io);
-
 var port = process.env.PORT || 5000;
 server.listen(port, function () {
-  console.log("Listening on port " + port);
+  console.log("Express server listening on port " + port);
 });
+
+require("./lib/connect")(io);

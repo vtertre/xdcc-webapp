@@ -3,6 +3,6 @@
     input.form-control(type="text", placeholder="Search a file", ng-model="fileFilter")
   .col-md-8.col-md-offset-2
     .list-group
-      a.list-group-item(ng-click="download(file)", ng-repeat="file in bot.fileSet | filter:fileFilter")
+      a.list-group-item(ng-cloak="", ng-href="{{computePackUrl(file)}}", ng-repeat="file in bot.fileSet | filter:fileFilter")
         | {{ file.name }}
         span.badge {{ file.packId }}

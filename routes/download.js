@@ -4,12 +4,11 @@ var requestManager = require("../lib/request_manager");
 exports.download = function (request, response) {
   // TODO *** Mandatory query params
   var botName = request.query.botName;
-  // TODO *** Rename to ID
-  var uuid = request.query.uuid;
+  var sessionId = request.query.sid;
   var packId = request.params.packId;
 
   // TODO *** Check exists
-  var client = store.getClient(uuid);
+  var client = store.getClient(sessionId);
 
   var packOpts = {
     pack: "#" + packId,
