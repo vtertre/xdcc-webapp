@@ -27,7 +27,7 @@ module.exports = function (grunt) {
         var shims = require(".././shim.js"),
             sharedModules = Object.keys(shims);
 
-        var appMapping = grunt.file.expandMapping(["*/*.js", "!*/*_spec.js", "!vendor.js"], grunt.template.process("<%= buildDir %>/js"), {
+        var appMapping = grunt.file.expandMapping(["*.js", "!*_spec.js", "!vendor.js"], grunt.template.process("<%= buildDir %>/js"), {
             flatten: true,
             cwd: "./src/js"
         });

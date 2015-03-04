@@ -1,5 +1,5 @@
 "use strict";
-module.exports = require("angular").module("bot", [require("angular-resource"), require("../socket")])
+module.exports = require("angular").module("bot", [require("angular-resource")])
   .controller("BotListController", require("./controller/bot_list_controller")).name;
 
 module.exports = require("angular").module("bot")

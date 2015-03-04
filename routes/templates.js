@@ -1,3 +1,3 @@
 exports.serve = function (request, response) {
-  response.render(request.params[0] + "/templates/" + request.params[1]);
+  response.render("templates/" + request.params[0]);
 };

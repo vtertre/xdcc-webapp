@@ -1,0 +1,14 @@
+.container
+  section
+    .panel.panel-default.center-block.text-center(id="login")
+      .logo
+        a(href="#/")
+          span Logo xdcc-webapp
+      p.title Connexion à Xdcc Web App
+      div
+        form(role="form", name="login", ng-submit="connect(credentials)")
+          .form-group.has-feedback
+            input.form-control(type="text", ng-model="credentials.login", placeholder="Login", required="")
+          .form-group.has-feedback
+            input.form-control(type="password", ng-model="credentials.password", placeholder="Mot de passe", required="")
+          button.btn.btn-primary.btn-lg.btn-block(type="submit") Se connecter
