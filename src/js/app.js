@@ -35,18 +35,5 @@ angular.module("xdcc", [require("angular-route"), require("./bot"), require("./l
   }])
 
   .config(["$httpProvider", function ($httpProvider) {
-    $httpProvider.interceptors.push(["$q", "$location", function ($q, $location) {
-      return {
-        request: function (config) {
-          config.headers.Authorization = "Basic Atoken7838768A3748768";
-          return config;
-        },
-        responseError: function (response) {
-          if (response.status === 401 || response.status === 403) {
-            $location.path("/login");
-          }
-          return $q.reject(response);
-        }
-      };
-    }]);
+    $httpProvider.interceptors.push("AuthInterceptor");
   }]);
