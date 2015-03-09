@@ -49,8 +49,10 @@
     "bootstrap": "./public/bower_components/bootstrap/dist/js/bootstrap.js",
     "angular": "./public/bower_components/angular/angular.js",
     "angular-resource": "./public/bower_components/angular-resource/angular-resource.js",
+    "angular-bootstrap": "./public/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
     "angular-route": "./public/bower_components/angular-route/angular-route.js",
-    "angular-socket-io": "./public/bower_components/angular-socket-io/socket.js"
+    "angular-socket-io": "./public/bower_components/angular-socket-io/socket.js",
+    "ngStorage": "./public/bower_components/ngstorage/ngStorage.js"
   },
   "browserify-shim": "./shim.js"
 }

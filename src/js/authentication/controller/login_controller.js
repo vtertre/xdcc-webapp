@@ -3,7 +3,7 @@
 module.exports = LoginController;
 
 /* @ngInject */
-function LoginController($scope, LoginService, $window) {
+function LoginController($scope, $rootScope, AuthenticationService, AUTH_EVENTS) {
   $scope.credentials = {
     login: undefined,
     password: undefined
@@ -13,19 +13,22 @@ function LoginController($scope, LoginService, $window) {
 
   function connect(credentials) {
     delete $scope.errors;
-    LoginService.connect(credentials).
-      success(function (data) {
-        $window.sessionStorage.token = data.token;
+    AuthenticationService.connect(credentials).then(
+      function (user) {
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        $scope.setCurrentUser(user);
+
         resetCredentials();
-      }).
-      error(function (data, status) {
+      },
+      function (data, status) {
         console.info(data);
-        delete $window.sessionStorage.token;
+        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         if (status === 400) {
           $scope.errors = $scope.errors || [];
           $scope.errors.push("Identifiant ou mot de passe invalide");
         }
-      });
+      }
+    );
   }
 
   function resetCredentials() {

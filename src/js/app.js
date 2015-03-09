@@ -1,8 +1,14 @@
 "use strict";
 var angular = require("angular");
 
-angular.module("xdcc", [require("angular-route"), require("./bot"), require("./login")])
-  .config(["$routeProvider", function ($routeProvider) {
+angular.module("xdcc", [
+  require("angular-bootstrap"),
+  require("angular-route"),
+  require("./common"),
+  require("./bot"),
+  require("./authentication")
+])
+  .config(["$routeProvider", "USER_ROLES", function ($routeProvider, USER_ROLES) {
     $routeProvider
       .when("/", {
         templateUrl: "/templates/index"
@@ -14,6 +20,9 @@ angular.module("xdcc", [require("angular-route"), require("./bot"), require("./l
           bots: function (Bots) {
             return Bots.getAll().$promise;
           }
+        },
+        data: {
+          authorizedRoles: [USER_ROLES.member]
         }
       })
       .when("/bot/:id", {
@@ -23,6 +32,9 @@ angular.module("xdcc", [require("angular-route"), require("./bot"), require("./l
           bot: function ($route, Bots) {
             return Bots.get({id: $route.current.params.id}).$promise;
           }
+        },
+        data: {
+          authorizedRoles: [USER_ROLES.member]
         }
       })
       .when("/login", {
@@ -36,4 +48,34 @@ angular.module("xdcc", [require("angular-route"), require("./bot"), require("./l
 
   .config(["$httpProvider", function ($httpProvider) {
     $httpProvider.interceptors.push("AuthInterceptor");
-  }]);
+  }])
+
+  .constant("AUTH_EVENTS", {
+    loginSuccess: "auth-login-success",
+    loginFailed: "auth-login-failed",
+    logoutSuccess: "auth-logout-success",
+    sessionTimeout: "auth-session-timeout",
+    unauthenticated: "auth-unauthenticated",
+    unauthorized: "auth-unauthorized"
+  })
+
+  .constant("USER_ROLES", {
+    all: "*",
+    member: "member"
+  })
+
+  .run(function ($rootScope, AUTH_EVENTS, AuthenticationService, $location) {
+    $rootScope.$on("$routeChangeStart", function (event, next) {
+      next.data = next.data || { authorizedRoles: ["*"] };
+      var authorizedRoles = next.data.authorizedRoles;
+      if (!AuthenticationService.isAuthorized(authorizedRoles)) {
+        event.preventDefault();
+        if (AuthenticationService.isAuthenticated()) {
+          $rootScope.$broadcast(AUTH_EVENTS.unauthorized);
+        } else {
+          $rootScope.$broadcast(AUTH_EVENTS.unauthenticated);
+          $location.path("/login");
+        }
+      }
+    });
+  });

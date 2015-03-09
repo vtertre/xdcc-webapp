@@ -20,12 +20,12 @@ html
     link(href="/bower_components/bootstrap/dist/css/bootstrap.css", rel="stylesheet", type="text/css")
     link(href=revision("/genere/css/style.css"), rel="stylesheet", type="text/css")
 
-  body.xdcc-webapp-pages(id=id)
+  body.xdcc-webapp-pages(id=id, ng-app="xdcc", ng-controller="OrchestratorController")
     header.main
       nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
         .container
           .navbar-header
-            a.navbar-brand(href="/")
+            a.navbar-brand(href="#/")
             button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
               span.icon-bar
               span.icon-bar
@@ -38,8 +38,17 @@ html
                 a(href="#/bot")= t("app.menu.bots")
             .navbar-right
               ul.nav.navbar-nav
-                li.login
+                li.login(ng-cloak="", ng-if="!currentUser && $location.path() !== '/login'")
                   a.btn.btn-default.btn-navbar(type="button", href="#/login")= t("app.menu.login")
+                li(ng-cloak="", ng-if="currentUser" ng-controller="ConnectedUserController")
+                  a.dropdown-toggle(data-toggle="dropdown", href="")
+                    span {{ currentUser.login }}&nbsp;
+                    span.caret()
+                  ul.dropdown-menu(role="menu")
+                    li
+                      a(href="", ng-click="disconnect()")
+                        span.glyphicon.glyphicon-log-out() &nbsp;
+                        = t("app.menu.logout")
     block content
     footer
       .container

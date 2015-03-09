@@ -10,7 +10,8 @@
     },
     "menu": {
       "bots": "Bots",
-      "login": "Log in"
+      "login": "Log in",
+      "logout": "Log out"
     }
   }
 }
