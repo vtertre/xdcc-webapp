@@ -20,13 +20,9 @@ function LoginController($scope, $rootScope, AuthenticationService, AUTH_EVENTS)
 
         resetCredentials();
       },
-      function (data) {
-        console.info(data);
+      function (response) {
+        $scope.errors = response.data.errors;
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-        if (data.status === 400) {
-          $scope.errors = $scope.errors || [];
-          $scope.errors.push("Identifiant ou mot de passe invalide");
-        }
       }
     );
   }

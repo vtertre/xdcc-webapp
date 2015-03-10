@@ -10,8 +10,16 @@
     },
     "menu": {
       "bots": "Bots",
-      "login": "Log in",
-      "logout": "Log out"
+      "log_in": "Log in",
+      "log_out": "Log out"
+    },
+    "login": {
+      "form": {
+        "title": "Log into XDCC Web App",
+        "login": "Login",
+        "password": "Password",
+        "log_in": "Log in"
+      }
     }
   }
 }

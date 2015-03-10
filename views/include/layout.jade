@@ -39,7 +39,7 @@ html
             .navbar-right
               ul.nav.navbar-nav
                 li.login(ng-cloak="", ng-if="!currentUser && $location.path() !== '/login'")
-                  a.btn.btn-default.btn-navbar(type="button", href="#/login")= t("app.menu.login")
+                  a.btn.btn-default.btn-navbar(type="button", href="#/login")= t("app.menu.log_in")
                 li(ng-cloak="", ng-if="currentUser" ng-controller="ConnectedUserController")
                   a.dropdown-toggle(data-toggle="dropdown", href="")
                     span {{ currentUser.login }}&nbsp;
@@ -48,7 +48,7 @@ html
                     li
                       a(href="", ng-click="disconnect()")
                         span.glyphicon.glyphicon-log-out() &nbsp;
-                        = t("app.menu.logout")
+                        = t("app.menu.log_out")
     block content
     footer
       .container

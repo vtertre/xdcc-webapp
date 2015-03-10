@@ -4,13 +4,13 @@
       .logo
         a(href="#/")
           span Logo xdcc-webapp
-      p.title Connexion à Xdcc Web App
+      p.title= t("app.login.form.title")
       div
         form(role="form", name="login", ng-submit="connect(credentials)")
           .form-group.has-feedback
-            input.form-control(type="text", ng-model="credentials.login", placeholder="Identifiant", required="")
+            input.form-control(type="text", ng-model="credentials.login", placeholder=t("app.login.form.login"), required="")
           .form-group.has-feedback
-            input.form-control(type="password", ng-model="credentials.password", placeholder="Mot de passe", required="")
+            input.form-control(type="password", ng-model="credentials.password", placeholder=t("app.login.form.password"), required="")
           .alert.alert-danger(ng-if="errors")
-            div(ng-repeat="error in errors") {{ error }}
-          button.btn.btn-primary.btn-lg.btn-block(type="submit") Se connecter
+            div(ng-repeat="error in errors") {{ error.message }}
+          button.btn.btn-primary.btn-lg.btn-block(type="submit")= t("app.login.form.log_in")
