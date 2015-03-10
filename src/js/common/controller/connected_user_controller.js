@@ -3,12 +3,13 @@
 module.exports = ConnectedUserController;
 
 /* @ngInject */
-function ConnectedUserController($scope, Session) {
+function ConnectedUserController($scope, $rootScope, Session, AUTH_EVENTS) {
   $scope.disconnect = disconnect;
 
   function disconnect() {
-    $scope.setCurrentUser(null);
+    var userId = $scope.currentUser.id;
     Session.destroy();
-    $scope.$location.path("/");
+    $scope.setCurrentUser(null);
+    $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess, userId);
   }
 }

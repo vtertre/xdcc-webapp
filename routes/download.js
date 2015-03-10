@@ -2,13 +2,15 @@ var store = require("../lib/store");
 var requestManager = require("../lib/request_manager");
 
 exports.download = function (request, response) {
-  // TODO *** Mandatory query params
   var botName = request.query.botName;
-  var sessionId = request.query.sid;
+  var uuid = request.query.uuid;
   var packId = request.params.packId;
 
-  // TODO *** Check exists
-  var client = store.getClient(sessionId);
+  var client = store.getClient(uuid);
+  if (!botName || !client) {
+    response.status(400).end();
+    return;
+  }
 
   var packOpts = {
     pack: "#" + packId,
@@ -39,5 +41,6 @@ exports.download = function (request, response) {
     client.emit("dlerror", error, packInfo);
   });
 
+  store.refreshAccess(uuid);
   packRequest.emit("start");
 };

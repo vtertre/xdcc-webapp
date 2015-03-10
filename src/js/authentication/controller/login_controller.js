@@ -15,15 +15,15 @@ function LoginController($scope, $rootScope, AuthenticationService, AUTH_EVENTS)
     delete $scope.errors;
     AuthenticationService.connect(credentials).then(
       function (user) {
-        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user.id, user.login);
         $scope.setCurrentUser(user);
 
         resetCredentials();
       },
-      function (data, status) {
+      function (data) {
         console.info(data);
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-        if (status === 400) {
+        if (data.status === 400) {
           $scope.errors = $scope.errors || [];
           $scope.errors.push("Identifiant ou mot de passe invalide");
         }
