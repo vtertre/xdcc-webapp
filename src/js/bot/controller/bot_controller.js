@@ -16,6 +16,6 @@ function BotController($scope, bot) {
     return "/bot/" + $scope.bot.id +
       "/pack/" + packId +
       "/download?botName=" + encodeURIComponent($scope.bot.name) +
-      "&uuid=" + encodeURIComponent($scope.currentUser.id)
+      "&uuid=" + encodeURIComponent($scope.currentUser.id);
   }
 }
