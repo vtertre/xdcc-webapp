@@ -5,7 +5,7 @@ var sinon = require("sinon");
 
 describe("AuthInterceptor", function () {
 
-  var $rootScope, $q, $location, $localStorage, AUTH_EVENTS, factory;
+  var $rootScope, $q, $location, Session, AUTH_EVENTS, factory;
 
   beforeEach(function () {
     $rootScope = {
@@ -17,7 +17,7 @@ describe("AuthInterceptor", function () {
     $location = {
       path: sinon.spy()
     };
-    $localStorage = {
+    Session = {
       token: "token123"
     };
     AUTH_EVENTS = {
@@ -25,7 +25,7 @@ describe("AuthInterceptor", function () {
       unauthorized: "unauthorized"
     };
     var AuthInterceptorFactory = require("./auth_interceptor_factory");
-    factory = new AuthInterceptorFactory($rootScope, $q, $location, $localStorage, AUTH_EVENTS);
+    factory = new AuthInterceptorFactory($rootScope, $q, $location, Session, AUTH_EVENTS);
   });
 
   it("must be defined", function () {
@@ -35,11 +35,11 @@ describe("AuthInterceptor", function () {
   it("must add the authorization header if a token is present in the local storage", function () {
     var config = {};
     factory.request(config);
-    expect(config.headers.Authorization).to.equal("Basic " + $localStorage.token);
+    expect(config.headers.Authorization).to.equal("Basic " + Session.token);
   });
 
   it("must not add the authorization header if no token is present in the local storage", function () {
-    $localStorage.token = undefined;
+    Session.token = undefined;
     var config = {};
     factory.request(config);
     expect(config.headers.Authorization).to.be.undefined;

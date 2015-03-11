@@ -3,12 +3,12 @@
 module.exports = AuthInterceptorFactory;
 
 /* @ngInject */
-function AuthInterceptorFactory($rootScope, $q, $location, $localStorage, AUTH_EVENTS) {
+function AuthInterceptorFactory($rootScope, $q, $location, Session, AUTH_EVENTS) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
-      if ($localStorage.token) {
-       config.headers.Authorization = "Basic " + $localStorage.token;
+      if (Session.token) {
+       config.headers.Authorization = "Basic " + Session.token;
        }
       return config;
     },
