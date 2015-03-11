@@ -33,7 +33,7 @@ function SessionService($localStorage) {
   }
 
   function restoreIfAvailable() {
-    if (!$localStorage.token) {
+    if (!isLocalStorageAvailable()) {
       return null;
     }
 
@@ -45,5 +45,11 @@ function SessionService($localStorage) {
     };
 
     return $localStorage.user;
+  }
+
+  function isLocalStorageAvailable() {
+    return $localStorage.token && $localStorage.user &&
+      $localStorage.user.id && $localStorage.user.login &&
+      $localStorage.user.role;
   }
 }

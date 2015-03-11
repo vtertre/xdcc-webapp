@@ -12,14 +12,17 @@ function AuthenticationService($http, Session) {
 
   function connect(credentials) {
     return $http.post("/api/login", credentials).
-      then(function (res) {
-        Session.create(res.data.token, res.data.user);
-        return res.data.user;
+      then(function (response) {
+        Session.create(response.data.token, response.data.user);
+        return response.data.user;
       });
   }
 
   function isAuthenticated() {
-    return !!Session.token && !!Session.user.id;
+    return !!Session.token &&
+      !!Session.user.id &&
+      !!Session.user.login &&
+      Session.user.role === "member";
   }
 
   function isAuthorized(authorizedRoles) {
