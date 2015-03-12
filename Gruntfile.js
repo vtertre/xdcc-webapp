@@ -24,6 +24,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask("build", ["clean", "assets"]);
 
+    grunt.registerTask("heroku:production", ["clean", "less", "js", "uglify", "rev"]);
+
 
     function loadConfig(path) {
         var glob = require("glob");
