@@ -28,7 +28,7 @@ if ("development" === app.get("env")) {
 
 if ("staging" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
-  app.locals.apiUrl = "";
+  app.locals.apiUrl = process.env.API_URL;
 }
 
 if ("production" === app.get("env")) {
