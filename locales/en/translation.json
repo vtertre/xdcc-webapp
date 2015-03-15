@@ -20,6 +20,9 @@
         "password": "Password",
         "log_in": "Log in"
       }
+    },
+    "bot_list": {
+      "search": "search a bot..."
     }
   }
 }

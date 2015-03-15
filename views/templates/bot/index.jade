@@ -1,7 +1,15 @@
-.row
-  .col-md-6.col-md-offset-3.search-field
-    input.form-control(type="text" placeholder="Search a bot" ng-model="titleFilter")
-  .col-md-6.col-md-offset-3.list-group
-    a.list-group-item(ng-repeat="bot in bots | filter:titleFilter | orderBy:'name'", ng-href="#/bot/{{bot.id}}")
-      | {{bot.name}}
-      span.badge {{bot.fileCount}}
+.container
+  .row
+    .col-md-4.col-md-offset-1.search-field
+      input.form-control(type="text" placeholder=t("app.bot_list.search") ng-model="titleFilter")
+    .col-md-2
+      .sort.btn-group
+        label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ASCENDING")
+          span.glyphicon.glyphicon-sort-by-alphabet
+        label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.DESCENDING")
+          span.glyphicon.glyphicon-sort-by-alphabet-alt
+  .row
+    .col-md-10.col-md-offset-1
+      .list-group.bot-list-group
+        a.list-group-item.col-xs-3(ng-repeat="bot in bots | filter:titleFilter | orderBy:'name':sortOrder", ng-href="#/bot/{{bot.id}}")
+          | {{bot.name}}

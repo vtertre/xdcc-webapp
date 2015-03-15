@@ -22,4 +22,8 @@ describe("BotListController", function () {
   it("must communicate with the scope", function () {
     expect($scope.bots).to.equal(bots);
   });
+
+  it("must use ascending order by default", function () {
+    expect($scope.sortOrder).to.equal($scope.orderOptions.ASCENDING);
+  });
 });

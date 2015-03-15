@@ -20,6 +20,9 @@
         "password": "Mot de passe",
         "log_in": "Se connecter"
       }
+    },
+    "bot_list": {
+      "search": "rechercher un bot..."
     }
   }
 }

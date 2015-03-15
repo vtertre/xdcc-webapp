@@ -103,3 +103,38 @@ footer .xdcc-webapp-links li a {
 .logo a span {
   text-indent: -4000px;
 }
+
+.bot-list-group {
+  margin-top: 10px;
+}
+
+.bot-list-group .list-group-item {
+  border-radius: 4px;
+  border: none;
+}
+
+body footer ul.xdcc-webapp-links li a.fr {
+  background: url(/img/FR_flag.png) no-repeat center 15px;
+}
+
+body footer ul.xdcc-webapp-links li a.en {
+  background: url(/img/US_flag.png) no-repeat center 15px;
+}
+
+@media not all, not all, only screen and (-webkit-min-device-pixel-ratio: 1.5), not all, only screen and (min-resolution: 1.5dppx) {
+  body footer ul.xdcc-webapp-links li a.fr {
+    background: url(/img/FR_flag-retina.png) no-repeat center 15px;
+    background-size: 21px 15px;
+  }
+
+  body footer ul.xdcc-webapp-links li a.en {
+    background: url(/img/US_flag-retina.png) no-repeat center 15px;
+    background-size: 21px 15px;
+  }
+}
+
+body footer ul.xdcc-webapp-links li a.en,
+body footer ul.xdcc-webapp-links li a.fr {
+  text-indent: -4000px;
+  width: 21px;
+}
