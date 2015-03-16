@@ -64,6 +64,11 @@ angular.module("xdcc", [
     member: "member"
   })
 
+  .constant("ORDER_OPTIONS", {
+    ascending: false,
+    descending: true
+  })
+
   .run(function ($rootScope, AUTH_EVENTS, AuthenticationService, $location) {
     $rootScope.$on("$routeChangeStart", function (event, next) {
       next.data = next.data || { authorizedRoles: ["*"] };

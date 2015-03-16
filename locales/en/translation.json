@@ -23,6 +23,11 @@
     },
     "bot_list": {
       "search": "search a bot..."
+    },
+    "bot": {
+      "search": "search a pack...",
+      "download": "Download",
+      "inspect": "Inspect"
     }
   }
 }

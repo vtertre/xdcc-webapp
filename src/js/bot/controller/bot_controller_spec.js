@@ -4,10 +4,14 @@ var expect = require("chai").use(require("sinon-chai")).expect;
 
 describe("BotController", function () {
 
-  var $scope, controller, bot;
+  var $scope, ORDER_OPTIONS, controller, bot;
 
   beforeEach(function () {
     $scope = {};
+    ORDER_OPTIONS = {
+      ascending: "ascending",
+      descending: "descending"
+    };
     bot = {
       id: "botId",
       name: "a_bot",
@@ -16,7 +20,7 @@ describe("BotController", function () {
       ]
     };
     var BotController = require("./bot_controller");
-    controller = new BotController($scope, bot);
+    controller = new BotController($scope, bot, ORDER_OPTIONS);
   });
 
   it("must be defined", function () {
@@ -25,6 +29,10 @@ describe("BotController", function () {
 
   it("must communicate with the scope", function () {
     expect($scope.bot).to.equal(bot);
+  });
+
+  it("must use ascending order by default", function () {
+    expect($scope.sortOrder).to.equal($scope.orderOptions.descending);
   });
 
   it("must compute the URL to download a pack", function () {

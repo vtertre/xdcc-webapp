@@ -1,8 +1,20 @@
-.row
-  .col-md-6.col-md-offset-3.search-field
-    input.form-control(type="text", placeholder="Search a file", ng-model="fileFilter")
-  .col-md-8.col-md-offset-2
-    .list-group
-      a.list-group-item(ng-cloak="", ng-href="{{computePackUrl(file)}}", ng-repeat="file in bot.fileSet | filter:fileFilter")
-        | {{ file.name }}
-        span.badge {{ file.packId }}
+.container
+  .row
+    .col-sm-4.col-sm-offset-2.search-field
+      input.form-control(type="text", placeholder=t("app.bot.search"), ng-model="fileFilter")
+    .col-sm-2
+      .sort.btn-group
+        label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ascending")
+          span.glyphicon.glyphicon-sort-by-order
+        label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.descending")
+          span.glyphicon.glyphicon-sort-by-order-alt
+    .col-sm-8.col-sm-offset-2
+      .pack-list-group
+        .pack-row(ng-repeat="pack in bot.fileSet | filter:fileFilter | orderBy:'packId':sortOrder")
+          .col-sm-1.pack-id \#{{ pack.packId }}
+          .col-sm-9.pack-name {{ pack.name }}
+          .col-sm-2.pack-action.text-right
+            a.btn.btn-default.btn-sm(type="button", ng-href="{{computePackUrl(pack)}}", aria-label="Download", title=t('app.bot.download'))
+              span.glyphicon.glyphicon-download-alt(aria-hidden="true")
+            a.btn.btn-default.btn-sm.disabled(type="button", aria-label="Inspect", title=t('app.bot.inspect'))
+              span.glyphicon.glyphicon-eye-open(aria-hidden="true")

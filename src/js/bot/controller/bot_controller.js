@@ -3,8 +3,10 @@
 module.exports = BotController;
 
 /* @ngInject */
-function BotController($scope, bot) {
+function BotController($scope, bot, ORDER_OPTIONS) {
   $scope.bot = bot;
+  $scope.orderOptions = ORDER_OPTIONS;
+  $scope.sortOrder = ORDER_OPTIONS.descending;
 
   $scope.computePackUrl = computePackUrl;
 
