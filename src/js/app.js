@@ -8,7 +8,7 @@ angular.module("xdcc", [
   require("./bot"),
   require("./authentication")
 ])
-  .config(["$routeProvider", "USER_ROLES", function ($routeProvider, USER_ROLES) {
+  .config(["$routeProvider", function ($routeProvider) {
     $routeProvider
       .when("/", {
         templateUrl: "/templates/index"
@@ -20,9 +20,6 @@ angular.module("xdcc", [
           bots: function (Bots) {
             return Bots.getAll().$promise;
           }
-        },
-        data: {
-          authorizedRoles: [USER_ROLES.member]
         }
       })
       .when("/bot/:id", {
@@ -32,9 +29,6 @@ angular.module("xdcc", [
           bot: function ($route, Bots) {
             return Bots.get({id: $route.current.params.id}).$promise;
           }
-        },
-        data: {
-          authorizedRoles: [USER_ROLES.member]
         }
       })
       .when("/login", {
