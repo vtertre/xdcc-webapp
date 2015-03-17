@@ -42,10 +42,10 @@ describe("BotController", function () {
 
     var file = bot.fileSet[0];
 
-    var expectedUrl = "/bot/" + bot.id +
+    var expectedUrl = "#/bot/" + bot.id +
       "/pack/" + file.packId +
-      "/download?botName=" + bot.name +
-      "&uuid=" + $scope.currentUser.id;
+      "/download?bn=" + bot.name +
+      "&u=" + $scope.currentUser.id;
 
     expect($scope.computePackUrl(file)).to.equal(expectedUrl);
   });

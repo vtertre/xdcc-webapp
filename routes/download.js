@@ -2,8 +2,8 @@ var store = require("../lib/store");
 var requestManager = require("../lib/request_manager");
 
 exports.download = function (request, response) {
-  var botName = request.query.botName;
-  var uuid = request.query.uuid;
+  var botName = request.query.bn;
+  var uuid = request.query.u;
   var packId = request.params.packId;
 
   var client = store.getClient(uuid);

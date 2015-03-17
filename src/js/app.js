@@ -31,6 +31,14 @@ angular.module("xdcc", [
           }
         }
       })
+      .when("/bot/:id/pack/:packId/download", {
+        templateUrl: function (routeParams) {
+          return "/bot/" + routeParams.id +
+            "/pack/" + routeParams.packId +
+            "/download?bn=" + routeParams.botName +
+            "&u=" + routeParams.uuid;
+        }
+      })
       .when("/login", {
         controller: "LoginController",
         templateUrl: "/templates/login/index"

@@ -8,7 +8,7 @@ function OrchestratorController($scope, $location, USER_ROLES, AUTH_EVENTS, Auth
 
   $scope.currentUser = null;
   $scope.userRoles = USER_ROLES;
-  $scope.isAuthorized = AuthenticationService.isAuthorized;
+  $scope.isAuthenticated = AuthenticationService.isAuthenticated;
 
   $scope.setCurrentUser = setCurrentUser;
 
