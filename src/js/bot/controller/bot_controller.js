@@ -15,9 +15,10 @@ function BotController($scope, bot, ORDER_OPTIONS) {
   }
 
   function getUrlString(packId) {
-    return "#/bot/" + $scope.bot.id +
+    return "/bot/" + $scope.bot.id +
       "/pack/" + packId +
       "/download?bn=" + encodeURIComponent($scope.bot.name) +
-      "&u=" + encodeURIComponent($scope.currentUser.id);
+      "&u=" + encodeURIComponent($scope.currentUser.id) +
+      "&t=" + encodeURIComponent($scope.currentUser.token);
   }
 }

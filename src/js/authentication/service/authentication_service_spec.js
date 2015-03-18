@@ -32,6 +32,9 @@ describe("AuthenticationService", function () {
       }
     };
 
+    Session.user = response.data.user;
+    Session.user.token = response.data.token;
+
     $http.post.returns({
       then: function (callback) {
         return callback.call(null, response);
@@ -42,12 +45,13 @@ describe("AuthenticationService", function () {
 
     expect($http.post).to.have.been.calledWith("/api/login", credentials);
     expect(Session.create).to.have.been.calledWith(response.data.token, response.data.user);
-    expect(callbackResult).to.deep.equal(response.data.user);
+    expect(callbackResult.id).to.equal(response.data.user.id);
+    expect(callbackResult.token).to.equal(response.data.user.token);
   });
 
   it("must consider the user authenticated", function () {
-    Session.token = "token123";
     Session.user = {
+      token: "token123",
       id: "id",
       login: "login",
       role: "member"
@@ -57,8 +61,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must consider the user unauthenticated when the token is null", function () {
-    Session.token = null;
     Session.user = {
+      token: null,
       id: "id",
       login: "login",
       role: "member"
@@ -68,8 +72,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must consider the user unauthenticated when the id is null", function () {
-    Session.token = "token123";
     Session.user = {
+      token: "token123",
       id: null,
       login: "login",
       role: "member"
@@ -79,8 +83,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must consider the user unauthenticated when the login is null", function () {
-    Session.token = "token123";
     Session.user = {
+      token: "token123",
       id: "id",
       login: null,
       role: "member"
@@ -90,8 +94,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must consider the user unauthenticated when the role differs from member", function () {
-    Session.token = "token123";
     Session.user = {
+      token: "token123",
       id: "id",
       login: "login",
       role: "*"
@@ -105,8 +109,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must authorize a user with the proper role", function () {
-    Session.token = "token123";
     Session.user = {
+      token: "token123",
       id: "id",
       login: "login",
       role: "member"
@@ -116,8 +120,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must reject a user who is not authenticated", function () {
-    Session.token = null;
     Session.user = {
+      token: null,
       id: null,
       login: null,
       role: null
@@ -127,8 +131,8 @@ describe("AuthenticationService", function () {
   });
 
   it("must reject a user who does not have the proper role", function () {
-    Session.token = "token123";
     Session.user = {
+      token: "token123",
       id: "id",
       login: "login",
       role: "anything"

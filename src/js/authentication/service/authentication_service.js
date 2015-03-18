@@ -14,12 +14,12 @@ function AuthenticationService($http, Session) {
     return $http.post("/api/login", credentials).
       then(function (response) {
         Session.create(response.data.token, response.data.user);
-        return response.data.user;
+        return Session.user;
       });
   }
 
   function isAuthenticated() {
-    return !!Session.token &&
+    return !!Session.user.token &&
       !!Session.user.id &&
       !!Session.user.login &&
       Session.user.role === "member";

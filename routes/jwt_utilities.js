@@ -3,21 +3,15 @@ module.exports = {
     secret: process.env.JWT_SECRET,
     audience: "xdcc-express-server",
     issuer: "xdcc-api",
-    getToken: getToken
+    getToken: getTokenFromQueryString
   }
 };
 
-function getToken(req) {
-  var authorizationHeader = req.headers.authorization;
-  if (!authorizationHeader) {
+function getTokenFromQueryString(req) {
+  var query = req.query;
+  if (!query) {
     return null;
   }
 
-  var splitHeader = authorizationHeader.split(' ');
-  var title = splitHeader[0];
-  if (title !== "Basic") {
-    return null;
-  }
-
-  return splitHeader[1];
+  return query.t;
 }

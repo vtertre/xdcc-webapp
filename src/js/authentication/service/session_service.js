@@ -10,22 +10,22 @@ function SessionService($localStorage) {
   self.destroy = destroy;
   self.restoreIfAvailable = restoreIfAvailable;
 
-  self.token = null;
   self.user = {};
 
   function create(token, user) {
-    $localStorage.token = self.token = token;
+    $localStorage.token = token;
     $localStorage.user = self.user = {
       id: user.id,
       login: user.login,
       role: user.role
     };
+    self.user.token = token;
   }
 
   function destroy() {
     $localStorage.$reset();
-    self.token = null;
     self.user = {
+      token: null,
       id: null,
       login: null,
       role: null
@@ -37,14 +37,14 @@ function SessionService($localStorage) {
       return null;
     }
 
-    self.token = $localStorage.token;
     self.user = {
+      token: $localStorage.token,
       id: $localStorage.user.id,
       login: $localStorage.user.login,
       role: $localStorage.user.role
     };
 
-    return $localStorage.user;
+    return self.user;
   }
 
   function isLocalStorageAvailable() {

@@ -14,7 +14,7 @@ describe("BotController", function () {
     };
     bot = {
       id: "botId",
-      name: "a_bot",
+      name: "a_bot_with_%_special_$$_[characters]",
       fileSet: [
         { name: "packName", packId: 1 }
       ]
@@ -37,15 +37,17 @@ describe("BotController", function () {
 
   it("must compute the URL to download a pack", function () {
     $scope.currentUser = {
+      token: "_%token123%_",
       id: "userId"
     };
 
     var file = bot.fileSet[0];
 
-    var expectedUrl = "#/bot/" + bot.id +
+    var expectedUrl = "/bot/" + bot.id +
       "/pack/" + file.packId +
-      "/download?bn=" + bot.name +
-      "&u=" + $scope.currentUser.id;
+      "/download?bn=" + encodeURIComponent(bot.name) +
+      "&u=" + encodeURIComponent($scope.currentUser.id) +
+      "&t=" + encodeURIComponent($scope.currentUser.token);
 
     expect($scope.computePackUrl(file)).to.equal(expectedUrl);
   });
