@@ -8,7 +8,7 @@ angular.module("xdcc", [
   require("./bot"),
   require("./authentication")
 ])
-  .config(["$routeProvider", function ($routeProvider) {
+  .config(["$routeProvider", "USER_ROLES", function ($routeProvider, USER_ROLES) {
     $routeProvider
       .when("/", {
         templateUrl: "/templates/index"
@@ -35,8 +35,11 @@ angular.module("xdcc", [
         templateUrl: function (routeParams) {
           return "/bot/" + routeParams.id +
             "/pack/" + routeParams.packId +
-            "/download?bn=" + routeParams.botName +
-            "&u=" + routeParams.uuid;
+            "/download?bn=" + routeParams.bn +
+            "&u=" + routeParams.u;
+        },
+        data: {
+          authorizedRoles: [USER_ROLES.member]
         }
       })
       .when("/login", {

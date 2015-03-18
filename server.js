@@ -23,6 +23,7 @@ i18n.init({
 
 if ("development" === app.get("env")) {
   app.locals.apiUrl = "http://localhost:8089";
+  process.env.JWT_SECRET = "devsecret";
   app.use(morgan("combined"));
 }
 
