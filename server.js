@@ -45,6 +45,12 @@ app.use('/api', proxy(app.locals.apiUrl, {
   }
 }));
 
+app.use('/sessions', proxy(app.locals.apiUrl, {
+  forwardPath: function (req, res) {
+    return "/sessions" + require('url').parse(req.url).path;
+  }
+}));
+
 i18n.serveClientScript(app)
   .serveDynamicResources(app);
 
