@@ -1,5 +1,5 @@
 "use strict";
-module.exports = require("angular").module("authentication", [require("ngStorage")])
+module.exports = require("angular").module("authentication", [require("angular-locker")])
   .controller("LoginController", require("./controller/login_controller")).name;
 
 module.exports = require("angular").module("authentication")

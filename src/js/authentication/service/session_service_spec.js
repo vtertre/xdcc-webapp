@@ -5,12 +5,16 @@ var sinon = require("sinon");
 
 describe("Session", function () {
 
-  var $localStorage, service, token, user;
+  var locker, mockStorage, service, token, user;
 
   beforeEach(function () {
-    $localStorage = {
-      $reset: sinon.spy()
+    locker = {
+      empty: sinon.spy(),
+      has: sinon.stub(),
+      get: sinon.stub(),
+      put: function (key, value) { mockStorage[key] = value; }
     };
+    mockStorage = {};
     token = "_%token123%_";
     user = {
       id: "id",
@@ -18,7 +22,7 @@ describe("Session", function () {
       role: "member"
     };
     var SessionService = require("./session_service");
-    service = new SessionService($localStorage);
+    service = new SessionService(locker);
   });
 
   it("must be defined", function () {
@@ -33,10 +37,10 @@ describe("Session", function () {
     expect(service.user.login).to.equal(user.login);
     expect(service.user.role).to.equal(user.role);
 
-    expect($localStorage.token).to.equal(token);
-    expect($localStorage.user.id).to.equal(user.id);
-    expect($localStorage.user.login).to.equal(user.login);
-    expect($localStorage.user.role).to.equal(user.role);
+    expect(mockStorage.token).to.equal(token);
+    expect(mockStorage.user.id).to.equal(user.id);
+    expect(mockStorage.user.login).to.equal(user.login);
+    expect(mockStorage.user.role).to.equal(user.role);
   });
 
   it("must properly destroy the session", function () {
@@ -47,48 +51,52 @@ describe("Session", function () {
     expect(service.user.login).to.be.null;
     expect(service.user.role).to.be.null;
 
-    expect($localStorage.$reset).to.have.been.called;
+    expect(locker.empty).to.have.been.called;
   });
 
   it("must return null is no local storage is available", function () {
+    locker.has.returns(false);
     var storedUser = service.restoreIfAvailable();
     expect(storedUser).to.be.null;
   });
 
   it("must return the user stored in local storage", function () {
-    $localStorage.token = token;
-    $localStorage.user = user;
+    locker.has.returns(true);
+    locker.get.withArgs("token").returns(token);
+    locker.get.withArgs("user").returns(user);
 
     var storedUser = service.restoreIfAvailable();
-    expect(storedUser.token).to.equal($localStorage.token);
-    expect(storedUser.id).to.equal($localStorage.user.id);
-    expect(storedUser.login).to.equal($localStorage.user.login);
-    expect(storedUser.role).to.equal($localStorage.user.role);
+    expect(storedUser.token).to.equal(token);
+    expect(storedUser.id).to.equal(user.id);
+    expect(storedUser.login).to.equal(user.login);
+    expect(storedUser.role).to.equal(user.role);
     expect(service.user).to.deep.equal(storedUser);
   });
 
   it("must return null if the token is missing", function () {
-    $localStorage.token = null;
-    $localStorage.user = user;
+    locker.get.withArgs("token").returns(null);
+    locker.get.withArgs("user").returns(user);
 
     var storedUser = service.restoreIfAvailable();
     expect(storedUser).to.be.null;
   });
 
   it("must return null if any of the user info is missing", function () {
-    $localStorage.token = token;
-    $localStorage.user = user;
+    locker.get.withArgs("token").returns(token);
+    locker.get.withArgs("user").returns(user);
 
-    $localStorage.user.id = null;
+    user.id = null;
     var storedUser = service.restoreIfAvailable();
     expect(storedUser).to.be.null;
 
-    $localStorage.user.id = user.id;
-    $localStorage.user.login = null;
+    user.id = "id";
+    user.login = null;
+    storedUser = service.restoreIfAvailable();
     expect(storedUser).to.be.null;
 
-    $localStorage.user.login = user.login;
-    $localStorage.user.role = null;
+    user.login = "login";
+    user.role = null;
+    storedUser = service.restoreIfAvailable();
     expect(storedUser).to.be.null;
   });
 });

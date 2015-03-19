@@ -33,10 +33,10 @@ module.exports = {
     },
     "exports": "angular.module('btford.socket-io').name"
   },
-  "ngStorage": {
+  "angular-locker": {
     "depends": {
       "angular": "angular"
     },
-    "exports": "angular.module('ngStorage').name"
+    "exports": "angular.module('angular-locker').name"
   }
 };

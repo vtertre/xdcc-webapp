@@ -3,7 +3,7 @@
 module.exports = SessionService;
 
 /* @ngInject */
-function SessionService($localStorage) {
+function SessionService(locker) {
   var self = this;
 
   self.create = create;
@@ -13,17 +13,18 @@ function SessionService($localStorage) {
   self.user = {};
 
   function create(token, user) {
-    $localStorage.token = token;
-    $localStorage.user = self.user = {
+    locker.put("token", token);
+    self.user = {
       id: user.id,
       login: user.login,
       role: user.role
     };
+    locker.put("user", self.user);
     self.user.token = token;
   }
 
   function destroy() {
-    $localStorage.$reset();
+    locker.empty();
     self.user = {
       token: null,
       id: null,
@@ -37,19 +38,17 @@ function SessionService($localStorage) {
       return null;
     }
 
-    self.user = {
-      token: $localStorage.token,
-      id: $localStorage.user.id,
-      login: $localStorage.user.login,
-      role: $localStorage.user.role
-    };
+    self.user = locker.get("user");
+    self.user.token = locker.get("token");
 
     return self.user;
   }
 
   function isLocalStorageAvailable() {
-    return $localStorage.token && $localStorage.user &&
-      $localStorage.user.id && $localStorage.user.login &&
-      $localStorage.user.role;
+    if (!locker.has("token") || !locker.has("user")) {
+      return null;
+    }
+    var user = locker.get("user");
+    return user.id && user.login && user.role;
   }
 }
