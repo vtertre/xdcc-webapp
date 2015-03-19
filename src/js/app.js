@@ -31,10 +31,6 @@ angular.module("xdcc", [
           }
         }
       })
-      .when("/login", {
-        controller: "LoginController",
-        templateUrl: "/templates/login/index"
-      })
       .otherwise({
         redirectTo: "/"
       });

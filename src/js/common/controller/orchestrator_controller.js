@@ -4,8 +4,6 @@ module.exports = OrchestratorController;
 
 /* @ngInject */
 function OrchestratorController($scope, $location, USER_ROLES, AUTH_EVENTS, AuthenticationService, Session, socket) {
-  $scope.$location = $location;
-
   $scope.currentUser = null;
   $scope.userRoles = USER_ROLES;
   $scope.isAuthenticated = AuthenticationService.isAuthenticated;
@@ -20,12 +18,12 @@ function OrchestratorController($scope, $location, USER_ROLES, AUTH_EVENTS, Auth
 
   $scope.$on(AUTH_EVENTS.loginSuccess, function (event, userId, userLogin) {
     socket.emit("userLoggedIn", userId, userLogin);
-    $scope.$location.path("/");
+    $location.path("/");
   });
 
   $scope.$on(AUTH_EVENTS.logoutSuccess, function (event, userId) {
     socket.emit("userLoggedOut", userId);
-    $scope.$location.path("/");
+    $location.path("/");
   });
 
   function setCurrentUser(user) {

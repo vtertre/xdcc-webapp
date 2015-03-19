@@ -3,20 +3,11 @@
 module.exports = AuthenticationService;
 
 /* @ngInject */
-function AuthenticationService($http, Session) {
+function AuthenticationService(Session) {
   var self = this;
 
-  self.connect = connect;
   self.isAuthenticated = isAuthenticated;
   self.isAuthorized = isAuthorized;
-
-  function connect(credentials) {
-    return $http.post("/sessions", credentials).
-      then(function (response) {
-        Session.create(response.data.token, response.data.user);
-        return Session.user;
-      });
-  }
 
   function isAuthenticated() {
     return !!Session.user.token &&

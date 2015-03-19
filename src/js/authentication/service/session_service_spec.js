@@ -5,16 +5,14 @@ var sinon = require("sinon");
 
 describe("Session", function () {
 
-  var locker, mockStorage, service, token, user;
+  var locker, service, token, user;
 
   beforeEach(function () {
     locker = {
       empty: sinon.spy(),
       has: sinon.stub(),
-      get: sinon.stub(),
-      put: function (key, value) { mockStorage[key] = value; }
+      get: sinon.stub()
     };
-    mockStorage = {};
     token = "_%token123%_";
     user = {
       id: "id",
@@ -27,20 +25,6 @@ describe("Session", function () {
 
   it("must be defined", function () {
     expect(service).to.be.defined;
-  });
-
-  it("must properly create the session", function () {
-    service.create(token, user);
-
-    expect(service.user.token).to.equal(token);
-    expect(service.user.id).to.equal(user.id);
-    expect(service.user.login).to.equal(user.login);
-    expect(service.user.role).to.equal(user.role);
-
-    expect(mockStorage.token).to.equal(token);
-    expect(mockStorage.user.id).to.equal(user.id);
-    expect(mockStorage.user.login).to.equal(user.login);
-    expect(mockStorage.user.role).to.equal(user.role);
   });
 
   it("must properly destroy the session", function () {

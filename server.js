@@ -8,12 +8,11 @@ var morgan = require("morgan");
 var serveStatic = require("serve-static");
 var revision = require("./revision");
 var proxy = require('express-http-proxy');
+var socketIo = require("socket.io");
 
 var app = express();
-var server = http.createServer(app);
-var io = require("socket.io").listen(server);
 
-console.log("Configuring application for environment: " + app.get("env"));
+console.log("Configuring xdcc application for environment: " + app.get("env"));
 
 i18n.init({
   ignoreRoutes: ['public/'],
@@ -25,6 +24,9 @@ if ("development" === app.get("env")) {
   app.locals.apiUrl = "http://localhost:8089";
   process.env.JWT_SECRET = "devsecret";
   app.use(morgan("combined"));
+
+  var loginApp = require("../xdcc-login/app").app;
+  app.use("/login", loginApp);
 }
 
 if ("staging" === app.get("env")) {
@@ -43,12 +45,6 @@ app.use('/api', proxy(app.locals.apiUrl, {
   }
 }));
 
-app.use('/sessions', proxy(app.locals.apiUrl, {
-  forwardPath: function (req, res) {
-    return "/sessions" + require('url').parse(req.url).path;
-  }
-}));
-
 i18n.serveClientScript(app)
   .serveDynamicResources(app);
 
@@ -62,6 +58,9 @@ require("./routes")(app);
 
 revision.registerHelper(app);
 i18n.registerAppHelper(app);
+
+var server = http.createServer(app);
+var io = socketIo.listen(server);
 
 var port = process.env.PORT || 5000;
 server.listen(port, function () {

@@ -6,22 +6,10 @@ module.exports = SessionService;
 function SessionService(locker) {
   var self = this;
 
-  self.create = create;
   self.destroy = destroy;
   self.restoreIfAvailable = restoreIfAvailable;
 
   self.user = {};
-
-  function create(token, user) {
-    locker.put("token", token);
-    self.user = {
-      id: user.id,
-      login: user.login,
-      role: user.role
-    };
-    locker.put("user", self.user);
-    self.user.token = token;
-  }
 
   function destroy() {
     locker.empty();
