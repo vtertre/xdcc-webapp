@@ -37,7 +37,7 @@ if ("production" === app.get("env")) {
   app.locals.apiUrl = process.env.API_URL;
 }
 
-app.use('/api', proxy(app.locals.apiUrl, {
+app.use('/api', proxy(app.locals.apiUrl + "/xdcc", {
   forwardPath: function (req, res) {
     return require('url').parse(req.url).path;
   }
