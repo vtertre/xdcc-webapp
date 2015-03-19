@@ -45,8 +45,7 @@ app.use('/api', proxy(app.locals.apiUrl, {
 
 app.use('/sessions', proxy(app.locals.apiUrl, {
   forwardPath: function (req, res) {
-    var path = require('url').parse(req.url).path;
-    return "/sessions" + ((path !== "/") ? path : "");
+    return "/sessions" + require('url').parse(req.url).path;
   }
 }));
 
