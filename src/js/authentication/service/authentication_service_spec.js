@@ -43,7 +43,7 @@ describe("AuthenticationService", function () {
 
     var callbackResult = service.connect(credentials);
 
-    expect($http.post).to.have.been.calledWith("/api/login", credentials);
+    expect($http.post).to.have.been.calledWith("/sessions", credentials);
     expect(Session.create).to.have.been.calledWith(response.data.token, response.data.user);
     expect(callbackResult.id).to.equal(response.data.user.id);
     expect(callbackResult.token).to.equal(response.data.user.token);
