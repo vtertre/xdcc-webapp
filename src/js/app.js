@@ -6,7 +6,8 @@ angular.module("xdcc", [
   require("angular-route"),
   require("./common"),
   require("./bot"),
-  require("./authentication")
+  require("./authentication"),
+  require("./queue")
 ])
   .config(["$routeProvider", function ($routeProvider) {
     $routeProvider
