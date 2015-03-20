@@ -23,7 +23,6 @@ function OrchestratorController($scope, $location, USER_ROLES, AUTH_EVENTS, Auth
 
   $scope.$on(AUTH_EVENTS.logoutSuccess, function (event, userId) {
     socket.emit("userLoggedOut", userId);
-    $location.path("/");
   });
 
   function setCurrentUser(user) {

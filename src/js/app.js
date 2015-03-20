@@ -67,7 +67,7 @@ angular.module("xdcc", [
     descending: true
   })
 
-  .run(function ($rootScope, AUTH_EVENTS, AuthenticationService, $location) {
+  .run(function ($rootScope, AUTH_EVENTS, AuthenticationService, $window) {
     $rootScope.$on("$routeChangeStart", function (event, next) {
       next.data = next.data || { authorizedRoles: ["*"] };
       var authorizedRoles = next.data.authorizedRoles;
@@ -77,7 +77,7 @@ angular.module("xdcc", [
           $rootScope.$broadcast(AUTH_EVENTS.unauthorized);
         } else {
           $rootScope.$broadcast(AUTH_EVENTS.unauthenticated);
-          $location.path("/login");
+          $window.location = "/login";
         }
       }
     });
