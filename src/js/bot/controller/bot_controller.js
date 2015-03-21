@@ -4,15 +4,21 @@ module.exports = BotController;
 
 /* @ngInject */
 function BotController($scope, bot, ORDER_OPTIONS) {
+  var self = this;
   $scope.bot = bot;
   $scope.orderOptions = ORDER_OPTIONS;
   $scope.sortOrder = ORDER_OPTIONS.descending;
 
-  $scope.computePackUrl = computePackUrl;
+  $scope.addToDownloadQueue = addToDownloadQueue;
 
-  function computePackUrl(file) {
-    return $scope.currentUser ? getUrlString(file.packId) : null;
+  function addToDownloadQueue(pack) {
+    pack.url = self.computePackUrl(pack);
+    $scope.queue.push(pack);
   }
+
+  self.computePackUrl = function(file) {
+    return $scope.currentUser ? getUrlString(file.packId) : null;
+  };
 
   function getUrlString(packId) {
     return "/bot/" + $scope.bot.id +

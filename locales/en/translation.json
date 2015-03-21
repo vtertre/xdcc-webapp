@@ -26,7 +26,7 @@
     },
     "bot": {
       "search": "search a pack...",
-      "download": "Download",
+      "add_to_queue": "Add to queue",
       "inspect": "Inspect"
     }
   }

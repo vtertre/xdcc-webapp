@@ -14,7 +14,8 @@
           .col-sm-1.pack-id \#{{ pack.packId }}
           .col-sm-9.pack-name {{ pack.name }}
           .col-sm-2.pack-action.text-right
-            a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated()", ng-href="{{computePackUrl(pack)}}", aria-label="Download", title=t('app.bot.download'))
-              span.glyphicon.glyphicon-download-alt(aria-hidden="true")
+            a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated()",
+                ng-click="addToDownloadQueue(pack)", aria-label="Download", title=t('app.bot.add_to_queue'))
+              span.glyphicon.glyphicon-plus(aria-hidden="true")
             a.btn.btn-default.btn-sm.disabled(type="button", aria-label="Inspect", title=t('app.bot.inspect'))
               span.glyphicon.glyphicon-eye-open(aria-hidden="true")

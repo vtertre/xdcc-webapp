@@ -26,7 +26,7 @@
     },
     "bot": {
       "search": "rechercher un pack...",
-      "download": "Télécharger",
+      "add_to_queue": "Ajouter à la file",
       "inspect": "Inspecter"
     }
   }
