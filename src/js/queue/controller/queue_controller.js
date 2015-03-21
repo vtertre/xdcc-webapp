@@ -5,47 +5,38 @@ module.exports = QueueController;
 /* @ngInject */
 function QueueController($scope, socket, $window) {
   var self = this;
-  self.queue = [];
-  self.completed = [];
-
-  $scope.autoStart = true;
+  $scope.queue = [];
+  $scope.completed = [];
   $scope.currentPack = undefined;
-
-  $scope.addToDownloadQueue = addToDownloadQueue;
+  $scope.autoStart = true;
 
   socket.on("complete", function (pack) {
     if (pack.filename !== $scope.currentPack.name) {
       throw "Completed pack differs from current one.";
     }
-    $scope.currentPack = self.queue.shift();
+    $scope.currentPack = $scope.queue.shift();
+  });
+
+  self.canStartDownloading = function () {
+    return !$scope.currentPack && ($scope.queue.length > 0);
+  };
+
+  self.download = function (pack) {
+    $window.location = pack.url;
+  };
+
+  $scope.$watch(self.canStartDownloading, function (canStartDownloading) {
+    if (canStartDownloading && $scope.autoStart) {
+      $scope.currentPack = $scope.queue.shift();
+    }
   });
 
   $scope.$watch("currentPack", function (newValue, oldValue) {
     if (oldValue) {
-      self.completed.push(oldValue);
+      $scope.completed.push(oldValue);
     }
     if (newValue) {
-      self.startDownload(newValue);
+      self.download(newValue);
     }
   });
-
-  function addToDownloadQueue(pack) {
-    // TODO *** uniqueness
-    if (pack.constructor === Array) {
-      if (!$scope.currentPack && $scope.autoStart) {
-        $scope.currentPack = pack.shift();
-      }
-      self.queue = self.queue.concat(pack);
-    } else {
-      if (!$scope.currentPack && $scope.autoStart) {
-        $scope.currentPack = pack;
-      } else {
-        self.queue.push(pack);
-      }
-    }
-  }
-
-  this.startDownload = function (pack) {
-    $window.location = pack.url;
-  };
 }
