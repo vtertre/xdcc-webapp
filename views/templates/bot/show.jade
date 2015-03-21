@@ -2,17 +2,19 @@
   .row
     .col-sm-4.col-sm-offset-2.search-field
       input.form-control(type="text", placeholder=t("app.bot.search"), ng-model="fileFilter")
-    .col-sm-2
-      .sort.btn-group
+    .col-sm-2.sort.btn-group
         label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ascending")
           span.glyphicon.glyphicon-sort-by-order
         label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.descending")
           span.glyphicon.glyphicon-sort-by-order-alt
+  .row
     .col-sm-8.col-sm-offset-2
       .pack-list-group
         .pack-row(ng-repeat="pack in bot.fileSet | filter:fileFilter | orderBy:'packId':sortOrder")
-          .col-sm-1.pack-id \#{{ pack.packId }}
-          .col-sm-9.pack-name {{ pack.name }}
+          .col-sm-1.pack-id
+            span \#{{ pack.packId }}
+          .col-sm-9.pack-name
+            span {{ pack.name }}
           .col-sm-2.pack-action.text-right
             a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated()",
                 ng-click="addToDownloadQueue(pack)", aria-label="Download", title=t('app.bot.add_to_queue'))

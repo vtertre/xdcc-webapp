@@ -10,6 +10,7 @@
     },
     "menu": {
       "bots": "Bots",
+      "queue": "Queue",
       "log_in": "Log in",
       "log_out": "Log out"
     },
@@ -28,6 +29,11 @@
       "search": "search a pack...",
       "add_to_queue": "Add to queue",
       "inspect": "Inspect"
+    },
+    "queue": {
+      "empty": "The queue is currently empty.",
+      "search": "search a pack...",
+      "remove": "Remove from queue"
     }
   }
 }

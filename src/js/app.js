@@ -14,6 +14,10 @@ angular.module("xdcc", [
       .when("/", {
         templateUrl: "/templates/index"
       })
+      .when("/queue", {
+        controller: "QueueActionController",
+        templateUrl: "/templates/queue/index"
+      })
       .when("/bot", {
         controller: "BotListController",
         templateUrl: "/templates/bot/index",

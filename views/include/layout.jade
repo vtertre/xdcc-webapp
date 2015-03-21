@@ -36,11 +36,13 @@ html
             ul.nav.navbar-nav
               li(class=location === 'bots' ? 'active' : '')
                 a(href="#/bot")= t("app.menu.bots")
+              li
+                a(href="#/queue")= t("app.menu.queue")
             .navbar-right
               ul.nav.navbar-nav
                 li.login(ng-cloak="", ng-if="!currentUser")
                   a.btn.btn-default.btn-navbar(type="button", href="/login")= t("app.menu.log_in")
-                li(ng-cloak="", ng-if="currentUser" ng-controller="ConnectedUserController")
+                li(ng-cloak="", ng-if="currentUser", ng-controller="ConnectedUserController")
                   a.dropdown-toggle(data-toggle="dropdown", href="")
                     span {{ currentUser.login }}&nbsp;
                     span.caret()

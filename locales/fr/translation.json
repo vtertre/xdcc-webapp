@@ -10,6 +10,7 @@
     },
     "menu": {
       "bots": "Bots",
+      "queue": "File",
       "log_in": "Se connecter",
       "log_out": "Se déconnecter"
     },
@@ -28,6 +29,11 @@
       "search": "rechercher un pack...",
       "add_to_queue": "Ajouter à la file",
       "inspect": "Inspecter"
+    },
+    "queue": {
+      "empty": "La file est vide actuellement.",
+      "search": "rechercher un pack...",
+      "remove": "Supprimer de la file"
     }
   }
 }

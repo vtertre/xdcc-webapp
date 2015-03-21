@@ -45,6 +45,7 @@ describe("BotController", function () {
     var pack = {id: 1};
     $scope.addToDownloadQueue(pack);
     expect($scope.queue).to.have.length(1);
+    expect($scope.queue[0].botName).to.equal(bot.name);
     expect($scope.queue[0].url).to.be.ok;
   });
 

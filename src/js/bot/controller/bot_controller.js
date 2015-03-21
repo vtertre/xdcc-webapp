@@ -13,6 +13,7 @@ function BotController($scope, bot, ORDER_OPTIONS) {
 
   function addToDownloadQueue(pack) {
     pack.url = self.computePackUrl(pack);
+    pack.botName = bot.name;
     $scope.queue.push(pack);
   }
 

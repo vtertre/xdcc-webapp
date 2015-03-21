@@ -1,0 +1,24 @@
+.container
+  .alert.alert-info(ng-cloak="", ng-show="queue.length === 0", role="alert")
+     = t("app.queue.empty")
+  .row(ng-cloak="", ng-show="queue.length > 0")
+    .col-sm-4.col-sm-offset-1.search-field
+      input.form-control(type="text", placeholder=t("app.queue.search"), ng-model="fileFilter")
+  .row(ng-cloak="", ng-show="currentPack")
+    .col-sm-10.col-sm-offset-1
+      .current-pack
+        .col-sm-3.pack-bot-name
+          span {{ currentPack.botName }}
+        .col-sm-7.pack-name
+          span {{ currentPack.name }}
+  .row(ng-cloak="", ng-show="queue.length > 0")
+    .col-sm-10.col-sm-offset-1
+      .pack-list-group
+        .pack-row(ng-repeat="pack in queue | filter:fileFilter")
+          .col-sm-3.pack-name
+            span {{ pack.botName }}
+          .col-sm-7.pack-name
+            span {{ pack.name }}
+          .col-sm-2.pack-action.text-right
+            a.btn.btn-danger.btn-sm(type="button", ng-click="removePack($index)", aria-label="Remove", title=t('app.queue.remove'))
+              span.glyphicon.glyphicon-remove(aria-hidden="true")
