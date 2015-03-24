@@ -67,6 +67,16 @@ describe("QueueController", function () {
     expect($window.location).to.equal(newPack.url);
   });
 
+  it("must start downloading a new pack and set the old one as canceled when the previous was canceled", function () {
+    var newPack = {name: "newPack", url: "/pack/newPack"};
+    var currentPack = {name: "currentPack", canceled: true};
+    $scope.currentPack = currentPack;
+    $scope.change("currentPack", newPack);
+    expect($scope.canceled.indexOf(currentPack)).to.not.equal(-1);
+    expect($scope.completed.indexOf(currentPack)).to.equal(-1);
+    expect($window.location).to.equal(newPack.url);
+  });
+
   it("must not start downloading a new pack when the new value is null", function () {
     var currentPack = {name: "currentPack"};
     $scope.currentPack = currentPack;
@@ -103,6 +113,56 @@ describe("QueueController", function () {
     expect(controller.canStartDownloading()).to.be.false;
   });
 
+  it("must start the next download when the previous one is complete", function () {
+    var futureCompleted = {filename: "current", name: "current"};
+    $scope.currentPack = futureCompleted;
+    $scope.queue = [{name: "pending"}];
+
+    socket.emit("xdcc:complete", futureCompleted);
+    expect($scope.currentPack.name).to.equal("pending");
+    expect($scope.queue).to.have.length(0);
+  });
+
+  it("must not complete the download if the finished pack has a different name", function () {
+    $scope.currentPack = {filename: "current", name: "current"};
+    $scope.queue = [{name: "pending"}];
+
+    expect(socket.emit.bind(null, "xdcc:complete", {filename: "different"})).to.throw();
+    expect($scope.currentPack.name).to.equal("current");
+    expect($scope.queue).to.have.length(1);
+  });
+
+  it("must start the next download when the previous one is canceled", function () {
+    var futureCanceled = {filename: "current", name: "current"};
+    $scope.currentPack = futureCanceled;
+    $scope.queue = [{name: "pending"}];
+
+    socket.emit("xdcc:canceled", futureCanceled);
+    expect($scope.currentPack.name).to.equal("pending");
+    expect($scope.queue).to.have.length(0);
+  });
+
+  it("must not start a new download if the canceled pack has a different name", function () {
+    $scope.currentPack = {filename: "current", name: "current"};
+    $scope.queue = [{name: "pending"}];
+
+    expect(socket.emit.bind(null, "xdcc:canceled", {filename: "different"})).to.throw();
+    expect($scope.currentPack.name).to.equal("current");
+    expect($scope.queue).to.have.length(1);
+  });
+
+  it("must stop downloading when the previous download had an error", function () {
+    var futurePackWithError = {filename: "current", name: "current"};
+    $scope.currentPack = futurePackWithError;
+    $scope.queue = [{name: "pending"}];
+
+    socket.emit("xdcc:dlerror", futurePackWithError);
+    expect(futurePackWithError.canceled).to.be.true;
+    expect($scope.currentPack).to.be.undefined;
+    expect($scope.autoStart).to.be.false;
+    expect($scope.queue).to.have.length(1);
+  });
+
   describe("with autoStart off", function () {
     beforeEach(function () {
       $scope.autoStart = false;
@@ -112,25 +172,6 @@ describe("QueueController", function () {
       $scope.queue = [{url: "/pack/1"}, {url: "/pack/2"}];
       $scope.change(controller.canStartDownloading, true);
       expect($scope.currentPack).to.be.undefined;
-    });
-
-    it("must start the next download when the proper event is received", function () {
-      var futureCompleted = {filename: "current", name: "current"};
-      $scope.currentPack = futureCompleted;
-      $scope.queue = [{name: "pending"}];
-
-      socket.emit("complete", futureCompleted);
-      expect($scope.currentPack.name).to.equal("pending");
-      expect($scope.queue).to.have.length(0);
-    });
-
-    it("must not complete the download if the finished pack has a different name", function () {
-      $scope.currentPack = {filename: "current", name: "current"};
-      $scope.queue = [{name: "pending"}];
-
-      expect(socket.emit.bind(null, "complete", {filename: "different"})).to.throw();
-      expect($scope.currentPack.name).to.equal("current");
-      expect($scope.queue).to.have.length(1);
     });
   });
 });

@@ -1,46 +1,49 @@
 var store = require("../lib/store");
-var requestManager = require("../lib/request_manager");
+var RequestManager = require("piped-xdcc");
 
 exports.download = function (request, response) {
-  var botName = request.query.bn;
+  var botNickname = request.query.bn;
   var uuid = request.query.u;
-  var packId = request.params.packId;
+  var packNumber = request.params.packId;
 
   var client = store.getClient(uuid);
-  if (!botName || !client) {
+  if (!botNickname || !client) {
     response.status(400).end();
     return;
   }
 
-  var packOpts = {
-    pack: "#" + packId,
-    nick: botName,
-    resume: false,
-    progressInterval: 10
+  var packOptions = {
+    packNumber: packNumber,
+    botNickname: botNickname
   };
 
-  var packRequest = new requestManager.Request(client, packOpts);
-  packRequest.on("connect", function (packInfo) {
-    response.set({
-      'Content-Disposition': 'attachment; filename=' + packInfo.filename,
-      'Content-Length': String(packInfo.filesize)
-    });
-  });
+  RequestManager.pipeXdccRequest(client, packOptions, function (error, connection) {
+    if (error) {
+      console.log(error);
+      response.status(500).end();
+      return;
+    }
+    connection
+      .on("connect", function (packInfo) {
+        response.set({
+          "Content-Disposition": "attachment; filename=" + packInfo.filename,
+          "Content-Length": String(packInfo.filesize)
+        });
+        response.on("close", function () {
+          connection.cancel();
+          client.emit("xdcc:canceled", packInfo);
+        });
 
-  packRequest.on("data", function (data) {
-    response.write(data);
-  });
-
-  packRequest.on("complete", function (packInfo) {
-    response.end();
-    client.emit("complete", packInfo);
-  });
-
-  packRequest.on("dlerror", function (packInfo, error) {
-    response.end();
-    client.emit("dlerror", error, packInfo);
+        this.pipe(response);
+      })
+      .on("complete", function (packInfo) {
+        client.emit("xdcc:complete", packInfo);
+      })
+      .on("dlerror", function (error, packInfo) {
+        response.end();
+        client.emit("xdcc:dlerror", error, packInfo);
+      });
   });
 
   store.refreshAccess(uuid);
-  packRequest.emit("start");
 };
