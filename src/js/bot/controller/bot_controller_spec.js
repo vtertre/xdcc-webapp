@@ -37,7 +37,7 @@ describe("BotController", function () {
     expect($scope.bot).to.equal(bot);
   });
 
-  it("must use ascending order by default", function () {
+  it("must use descending order by default", function () {
     expect($scope.sortOrder).to.equal($scope.orderOptions.descending);
   });
 

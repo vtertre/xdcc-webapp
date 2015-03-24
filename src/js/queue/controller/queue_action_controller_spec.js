@@ -14,6 +14,10 @@ describe("QueueActionController", function () {
     controller = new QueueActionController($scope);
   });
 
+  it("must be defined", function () {
+    expect(controller).to.be.defined;
+  });
+
   it("must remove a pack from the download queue", function () {
     var packToRemove = {id: 1};
     $scope.queue.push({id: 0}, packToRemove, {id: 2});
