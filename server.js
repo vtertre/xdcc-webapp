@@ -61,6 +61,11 @@ app.set("view engine", "jade");
 app.use(serveStatic(__dirname + "/public/"));
 
 require("./routes")(app);
+app.use(function (error, request, response, next) {
+  if (error && error.status === 401) {
+    response.redirect(401, "/login");
+  }
+});
 
 revision.registerHelper(app);
 i18n.registerAppHelper(app);
