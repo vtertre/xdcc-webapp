@@ -31,7 +31,7 @@
       "inspect": "Inspecter"
     },
     "queue": {
-      "empty": "La file est vide actuellement.",
+      "empty": "La file est actuellement vide",
       "search": "rechercher un pack...",
       "remove": "Supprimer de la file"
     }
