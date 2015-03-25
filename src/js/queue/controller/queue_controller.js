@@ -30,9 +30,9 @@ function QueueController($scope, socket, $window) {
     $scope.currentPack = $scope.queue.shift();
   });
 
-  socket.on("xdcc:dlerror", function (pack) {
-    ensurePackMatchesCurrentOne(pack);
+  socket.on("xdcc:dlerror", function (error) {
     $scope.autoStart = false;
+    $scope.currentPack.error = error.message;
     $scope.currentPack.canceled = true;
     $scope.currentPack = undefined;
   });

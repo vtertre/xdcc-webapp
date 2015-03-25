@@ -19,8 +19,7 @@ exports.download = function (request, response) {
 
   RequestManager.pipeXdccRequest(client, packOptions, function (error, connection) {
     if (error) {
-      console.log(error);
-      response.status(500).end();
+      internalError(error);
       return;
     }
     connection
@@ -39,11 +38,13 @@ exports.download = function (request, response) {
       .on("complete", function (packInfo) {
         client.emit("xdcc:complete", packInfo);
       })
-      .on("dlerror", function (error, packInfo) {
-        response.end();
-        client.emit("xdcc:dlerror", error, packInfo);
-      });
+      .on("dlerror", internalError);
   });
+
+  function internalError(error, packInfo) {
+    response.status(500).end();
+    client.emit("xdcc:dlerror", { "message": error }, packInfo);
+  }
 
   store.refreshAccess(uuid);
 };

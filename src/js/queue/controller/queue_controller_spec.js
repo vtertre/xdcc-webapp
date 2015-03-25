@@ -152,11 +152,13 @@ describe("QueueController", function () {
   });
 
   it("must stop downloading when the previous download had an error", function () {
-    var futurePackWithError = {filename: "current", name: "current"};
+    var futurePackWithError = {name: "current"};
+    var error = {message: "an error message"};
     $scope.currentPack = futurePackWithError;
     $scope.queue = [{name: "pending"}];
 
-    socket.emit("xdcc:dlerror", futurePackWithError);
+    socket.emit("xdcc:dlerror", error);
+    expect(futurePackWithError.error).to.equal(error.message);
     expect(futurePackWithError.canceled).to.be.true;
     expect($scope.currentPack).to.be.undefined;
     expect($scope.autoStart).to.be.false;
