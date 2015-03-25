@@ -17,6 +17,7 @@ html
 
 
 
+    link(href="//fonts.googleapis.com/css?family=PT+Sans:400,700")
     link(href="/bower_components/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet", type="text/css")
     link(href=revision("/genere/css/style.css"), rel="stylesheet", type="text/css")
 
@@ -33,10 +34,10 @@ html
               span.icon-bar
 
           .collapse.navbar-collapse#navbar-main
-            ul.nav.navbar-nav
-              li(class=location === 'bots' ? 'active' : '')
+            ul.nav.navbar-nav(ng-controller="MenuLocationController")
+              li(ng-class="{active: isCurrentLocation('/bot')}")
                 a(href="#/bot")= t("app.menu.bots")
-              li
+              li(ng-class="{active: isCurrentLocation('/queue')}")
                 a(href="#/queue")= t("app.menu.queue")
             .navbar-right
               ul.nav.navbar-nav
