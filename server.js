@@ -11,6 +11,7 @@ var proxy = require('express-http-proxy');
 var socketIo = require("socket.io");
 
 var app = express();
+var loginApp;
 
 console.log("Configuring xdcc application for environment: " + app.get("env"));
 
@@ -25,19 +26,22 @@ if ("development" === app.get("env")) {
   process.env.JWT_SECRET = "devsecret";
   app.use(morgan("combined"));
 
-  var loginApp = require("../xdcc-login/app").app;
-  app.use("/login", loginApp);
+  loginApp = require("../xdcc-login/app").app;
 }
 
 if ("staging" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
-  app.locals.apiUrl = process.env.API_URL;
+  app.locals.apiUrl = "https://xdcc-api.herokuapp.com";
+
+  loginApp = require("./subapp/xdcc-login/app").app;
 }
 
 if ("production" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
   app.locals.apiUrl = process.env.API_URL;
 }
+
+app.use("/login", loginApp);
 
 app.use('/api', proxy(app.locals.apiUrl, {
   forwardPath: function (req, res) {
