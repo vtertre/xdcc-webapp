@@ -1,0 +1,54 @@
+@gray-border: #ddd;
+@gray-hover: #f5f5f5;
+
+.pack-list-group {
+  margin-top: 10px;
+}
+
+.pack-row {
+  display: table;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.pack-row:hover {
+  background-color: @gray-hover;
+}
+
+.pack-row:not(:first-child) {
+  border-top: 1px solid @gray-border;
+}
+
+.pack-row div {
+  float: none;
+}
+
+.pack-action {
+  visibility: hidden;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.pack-row:hover .pack-action {
+  visibility: visible;
+}
+
+.pack-action .btn:not(:first-child) {
+  margin-left: 2px;
+}
+
+.pack-id {
+  display: table-cell;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.pack-bot-name {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.pack-name {
+  display: table-cell;
+  vertical-align: middle;
+}

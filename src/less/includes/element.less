@@ -1,23 +1,9 @@
-// TODO *** Must have a way to import this directly from bootstrap
-@brand-primary: darken(#428bca, 6.5%);
-@brand-success: #5cb85c;
-@brand-info:    #5bc0de;
-@brand-warning: #f0ad4e;
-@brand-danger:  #d9534f;
-
-@gray-border: #ddd;
-@gray-hover: #f5f5f5;
-
 body {
 	margin:0;
   color: #5C5C5C;
   font-family: 'PT Sans', Helvetica, serif;
   font-size: 14px;
   background-color: #F5F5F5;
-}
-
-#index {
-  background-color: #fff;
 }
 
 .navbar-brand {
@@ -45,11 +31,6 @@ body header nav .navbar-nav li.login a {
 
 .content {
   padding: 90px 0 0 0;
-}
-
-main .masthead {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 footer .container {
@@ -80,15 +61,6 @@ footer .xdcc-webapp-links li a {
   text-decoration: none;
 }
 
-.bot-list-group {
-  margin-top: 10px;
-}
-
-.bot-list-group .list-group-item {
-  border-radius: 4px;
-  border: none;
-}
-
 body footer ul.xdcc-webapp-links li a.fr {
   background: url(/img/FR_flag.png) no-repeat center 15px;
 }
@@ -97,14 +69,14 @@ body footer ul.xdcc-webapp-links li a.en {
   background: url(/img/US_flag.png) no-repeat center 15px;
 }
 
-@media not all, not all, only screen and (-webkit-min-device-pixel-ratio: 1.5), not all, only screen and (min-resolution: 1.5dppx) {
+@media not all,not all, only screen and (-webkit-min-device-pixel-ratio: 1.5), not all, only screen and (min-resolution: 1.5dppx) {
   body footer ul.xdcc-webapp-links li a.fr {
-    background: url(/img/FR_flag-retina.png) no-repeat center 15px;
+    background: url(/img/FR_flag_retina.png) no-repeat center 15px;
     background-size: 21px 15px;
   }
 
   body footer ul.xdcc-webapp-links li a.en {
-    background: url(/img/US_flag-retina.png) no-repeat center 15px;
+    background: url(/img/US_flag_retina.png) no-repeat center 15px;
     background-size: 21px 15px;
   }
 }
@@ -113,66 +85,4 @@ body footer ul.xdcc-webapp-links li a.en,
 body footer ul.xdcc-webapp-links li a.fr {
   text-indent: -4000px;
   width: 21px;
-}
-
-.pack-list-group {
-  margin-top: 10px;
-}
-
-.pack-row {
-  display: table;
-  width: 100%;
-  padding: 12px 0;
-}
-
-.pack-row:hover {
-  background-color: @gray-hover;
-}
-
-.pack-row:not(:first-child) {
-  border-top: 1px solid @gray-border;
-}
-
-.pack-row div {
-  float: none;
-}
-
-.pack-action {
-  visibility: hidden;
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.pack-row:hover .pack-action {
-  visibility: visible;
-}
-
-.pack-action .btn:not(:first-child) {
-  margin-left: 2px;
-}
-
-.pack-id {
-  display: table-cell;
-  vertical-align: middle;
-  font-weight: bold;
-}
-
-.pack-bot-name {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.pack-name {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.current-pack {
-  margin-top: 10px;
-  display: table;
-  width: 100%;
-  padding: 12px 0;
-  background-color: @brand-primary;
-  color: #ffffff;
-  border-radius: 4px;
 }
