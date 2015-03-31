@@ -30,12 +30,8 @@ describe("Session", function () {
   it("must properly destroy the session", function () {
     service.destroy();
 
-    expect(service.user.token).to.be.null;
-    expect(service.user.id).to.be.null;
-    expect(service.user.login).to.be.null;
-    expect(service.user.role).to.be.null;
-
     expect(locker.empty).to.have.been.called;
+    expect(service.user).to.be.null;
   });
 
   it("must return null is no local storage is available", function () {

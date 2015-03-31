@@ -9,7 +9,8 @@ module.exports = require("angular").module("authentication", [require("angular-l
   }])
 
   .config(["lockerProvider", function config(lockerProvider) {
-    lockerProvider.setDefaultDriver("local")
+    lockerProvider
+      .setDefaultDriver("local")
       .setDefaultNamespace(false)
       .setSeparator(".")
       .setEventsEnabled(false);
