@@ -1,5 +1,5 @@
 "use strict";
-module.exports = require("angular").module("bot", [require("angular-resource"), require("angular-route")])
+module.exports = require("angular").module("bot", [require("angular-resource")])
   .controller("BotListController", require("./controller/bot_list_controller"))
   .controller("BotController", require("./controller/bot_controller"))
   .factory("Bots", require("./resource/bots_resource"))
