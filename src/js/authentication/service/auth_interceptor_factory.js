@@ -3,13 +3,13 @@
 module.exports = AuthInterceptorFactory;
 
 /* @ngInject */
-function AuthInterceptorFactory($rootScope, $q, $location, Session, AUTH_EVENTS) {
+function AuthInterceptorFactory($rootScope, $q, $window, Session, AUTH_EVENTS) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
       if (Session.token) {
-       config.headers.Authorization = "Basic " + Session.token;
-       }
+        config.headers.Authorization = "Basic " + Session.token;
+      }
       return config;
     },
     responseError: function (response) {
@@ -18,7 +18,7 @@ function AuthInterceptorFactory($rootScope, $q, $location, Session, AUTH_EVENTS)
           401: AUTH_EVENTS.unauthenticated,
           403: AUTH_EVENTS.unauthorized
         }[response.status], response);
-        $location.path("/login");
+        $window.location = "/login";
       }
       return $q.reject(response);
     }

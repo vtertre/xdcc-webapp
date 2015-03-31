@@ -5,7 +5,7 @@ var sinon = require("sinon");
 
 describe("AuthInterceptor", function () {
 
-  var $rootScope, $q, $location, Session, AUTH_EVENTS, factory;
+  var $rootScope, $q, $window, Session, AUTH_EVENTS, factory;
 
   beforeEach(function () {
     $rootScope = {
@@ -14,8 +14,8 @@ describe("AuthInterceptor", function () {
     $q = {
       reject: sinon.stub()
     };
-    $location = {
-      path: sinon.spy()
+    $window = {
+      location: undefined
     };
     Session = {
       token: "token123"
@@ -25,7 +25,7 @@ describe("AuthInterceptor", function () {
       unauthorized: "unauthorized"
     };
     var AuthInterceptorFactory = require("./auth_interceptor_factory");
-    factory = new AuthInterceptorFactory($rootScope, $q, $location, Session, AUTH_EVENTS);
+    factory = new AuthInterceptorFactory($rootScope, $q, $window, Session, AUTH_EVENTS);
   });
 
   it("must be defined", function () {
@@ -54,7 +54,7 @@ describe("AuthInterceptor", function () {
 
     var result = factory.responseError(response);
     expect($rootScope.$broadcast).to.have.been.calledWith(AUTH_EVENTS.unauthenticated, response);
-    expect($location.path).to.have.been.calledWith("/login");
+    expect($window.location).to.equal("/login");
     expect($q.reject).to.have.been.calledWith(response);
     expect(result).to.equal("rejected");
   });
@@ -68,7 +68,7 @@ describe("AuthInterceptor", function () {
 
     var result = factory.responseError(response);
     expect($rootScope.$broadcast).to.have.been.calledWith(AUTH_EVENTS.unauthorized, response);
-    expect($location.path).to.have.been.calledWith("/login");
+    expect($window.location).to.equal("/login");
     expect($q.reject).to.have.been.calledWith(response);
     expect(result).to.equal("rejected");
   });
