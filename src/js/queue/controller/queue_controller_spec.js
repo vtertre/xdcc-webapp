@@ -53,41 +53,46 @@ describe("QueueController", function () {
   });
 
   it("must start a new download as soon as a pack is added to the queue", function () {
-    $scope.queue = [{url: "/pack/1"}, {url: "/pack/2"}];
+    $scope.queue = [{ url: "/pack/1" }, { url: "/pack/2" }];
     $scope.change(controller.canStartDownloading, true);
+
     expect($scope.currentPack.url).to.equal("/pack/1");
   });
 
   it("must start downloading a new pack and set the old one as completed when the current pack changes", function () {
-    var newPack = {name: "newPack", url: "/pack/newPack"};
-    var currentPack = {name: "currentPack"};
+    var newPack = { name: "newPack", url: "/pack/newPack" };
+    var currentPack = { name: "currentPack" };
     $scope.currentPack = currentPack;
     $scope.change("currentPack", newPack);
+
     expect($scope.completed.indexOf(currentPack)).to.not.equal(-1);
     expect($window.location).to.equal(newPack.url);
   });
 
   it("must start downloading a new pack and set the old one as canceled when the previous was canceled", function () {
-    var newPack = {name: "newPack", url: "/pack/newPack"};
-    var currentPack = {name: "currentPack", canceled: true};
+    var newPack = { name: "newPack", url: "/pack/newPack" };
+    var currentPack = { name: "currentPack", canceled: true };
     $scope.currentPack = currentPack;
     $scope.change("currentPack", newPack);
+
     expect($scope.canceled.indexOf(currentPack)).to.not.equal(-1);
     expect($scope.completed.indexOf(currentPack)).to.equal(-1);
     expect($window.location).to.equal(newPack.url);
   });
 
   it("must not start downloading a new pack when the new value is null", function () {
-    var currentPack = {name: "currentPack"};
+    var currentPack = { name: "currentPack" };
     $scope.currentPack = currentPack;
     $scope.change("currentPack", null);
+
     expect($scope.completed.indexOf(currentPack)).to.not.equal(-1);
     expect($window.location).to.equal("");
   });
 
   it("must not add a new pack as completed if none was downloaded", function () {
-    var newPack = {name: "newPack", url: "/pack/newPack"};
+    var newPack = { name: "newPack", url: "/pack/newPack" };
     $scope.change("currentPack", newPack);
+
     expect($scope.completed).to.have.length(0);
     expect($window.location).to.equal(newPack.url);
   });
@@ -100,12 +105,14 @@ describe("QueueController", function () {
 
   it("can start to download when none is in progress and the queue is not empty", function () {
     $scope.queue = [{}];
+
     expect(controller.canStartDownloading()).to.be.true;
   });
 
   it("cannot start downloading when a download is in progress", function () {
     $scope.currentPack = {};
     $scope.queue = [{}];
+
     expect(controller.canStartDownloading()).to.be.false;
   });
 
@@ -113,56 +120,63 @@ describe("QueueController", function () {
     expect(controller.canStartDownloading()).to.be.false;
   });
 
-  it("must start the next download when the previous one is complete", function () {
-    var futureCompleted = {filename: "current", name: "current"};
-    $scope.currentPack = futureCompleted;
-    $scope.queue = [{name: "pending"}];
+  describe("socket events", function () {
 
-    socket.emit("xdcc:complete", futureCompleted);
-    expect($scope.currentPack.name).to.equal("pending");
-    expect($scope.queue).to.have.length(0);
-  });
+    var pendingPack = { name: "pending" };
 
-  it("must not complete the download if the finished pack has a different name", function () {
-    $scope.currentPack = {filename: "current", name: "current"};
-    $scope.queue = [{name: "pending"}];
+    beforeEach(function () {
+      $scope.queue = [pendingPack];
+    });
 
-    expect(socket.emit.bind(null, "xdcc:complete", {filename: "different"})).to.throw();
-    expect($scope.currentPack.name).to.equal("current");
-    expect($scope.queue).to.have.length(1);
-  });
+    it("must start the next download when the previous one is complete", function () {
+      var futureCompleted = { filename: "current", name: "current" };
+      $scope.currentPack = futureCompleted;
 
-  it("must start the next download when the previous one is canceled", function () {
-    var futureCanceled = {filename: "current", name: "current"};
-    $scope.currentPack = futureCanceled;
-    $scope.queue = [{name: "pending"}];
+      socket.emit("xdcc:complete", futureCompleted);
 
-    socket.emit("xdcc:canceled", futureCanceled);
-    expect($scope.currentPack.name).to.equal("pending");
-    expect($scope.queue).to.have.length(0);
-  });
+      expect($scope.currentPack).to.deep.equal(pendingPack);
+      expect($scope.queue).to.have.length(0);
+    });
 
-  it("must not start a new download if the canceled pack has a different name", function () {
-    $scope.currentPack = {filename: "current", name: "current"};
-    $scope.queue = [{name: "pending"}];
+    it("must not complete the download if the finished pack has a different name", function () {
+      $scope.currentPack = { filename: "current", name: "current" };
 
-    expect(socket.emit.bind(null, "xdcc:canceled", {filename: "different"})).to.throw();
-    expect($scope.currentPack.name).to.equal("current");
-    expect($scope.queue).to.have.length(1);
-  });
+      expect(socket.emit.bind(null, "xdcc:complete", { filename: "different" })).to.throw();
+      expect($scope.currentPack.name).to.equal("current");
+      expect($scope.queue).to.have.length(1);
+    });
 
-  it("must stop downloading when the previous download had an error", function () {
-    var futurePackWithError = {name: "current"};
-    var error = {message: "an error message"};
-    $scope.currentPack = futurePackWithError;
-    $scope.queue = [{name: "pending"}];
+    it("must start the next download when the previous one is canceled", function () {
+      var futureCanceled = { filename: "current", name: "current" };
+      $scope.currentPack = futureCanceled;
 
-    socket.emit("xdcc:dlerror", error);
-    expect(futurePackWithError.error).to.equal(error.message);
-    expect(futurePackWithError.canceled).to.be.true;
-    expect($scope.currentPack).to.be.undefined;
-    expect($scope.autoStart).to.be.false;
-    expect($scope.queue).to.have.length(1);
+      socket.emit("xdcc:canceled", futureCanceled);
+
+      expect($scope.currentPack).to.deep.equal(pendingPack);
+      expect($scope.queue).to.have.length(0);
+    });
+
+    it("must not start a new download if the canceled pack has a different name", function () {
+      $scope.currentPack = { filename: "current", name: "current" };
+
+      expect(socket.emit.bind(null, "xdcc:canceled", { filename: "different" })).to.throw();
+      expect($scope.currentPack.name).to.equal("current");
+      expect($scope.queue).to.have.length(1);
+    });
+
+    it("must stop downloading when the previous download had an error", function () {
+      var futurePackWithError = { name: "current" };
+      var error = { message: "an error message" };
+      $scope.currentPack = futurePackWithError;
+
+      socket.emit("xdcc:dlerror", error);
+
+      expect(futurePackWithError.error).to.equal(error.message);
+      expect(futurePackWithError.canceled).to.be.true;
+      expect($scope.currentPack).to.be.undefined;
+      expect($scope.autoStart).to.be.false;
+      expect($scope.queue).to.have.length(1);
+    });
   });
 
   describe("with autoStart off", function () {
@@ -171,8 +185,9 @@ describe("QueueController", function () {
     });
 
     it("must not start a new download when a pack is added to the queue", function () {
-      $scope.queue = [{url: "/pack/1"}, {url: "/pack/2"}];
+      $scope.queue = [{ url: "/pack/1" }, { url: "/pack/2" }];
       $scope.change(controller.canStartDownloading, true);
+
       expect($scope.currentPack).to.be.undefined;
     });
   });

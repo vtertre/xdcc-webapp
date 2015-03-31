@@ -10,10 +10,10 @@ function AuthenticationService(Session) {
   self.isAuthorized = isAuthorized;
 
   function isAuthenticated() {
-    return !!Session.user.token &&
-      !!Session.user.id &&
-      !!Session.user.login &&
-      Session.user.role === "member";
+    return !!(Session.user.token &&
+      Session.user.id &&
+      Session.user.login &&
+      Session.user.role === "member");
   }
 
   function isAuthorized(authorizedRoles) {
@@ -25,6 +25,6 @@ function AuthenticationService(Session) {
       return true;
     }
 
-    return ((self.isAuthenticated()) && (authorizedRoles.indexOf(Session.user.role) !== -1));
+    return self.isAuthenticated() && (authorizedRoles.indexOf(Session.user.role) !== -1);
   }
 }

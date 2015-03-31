@@ -61,7 +61,7 @@ describe("BotController", function () {
     expect(controller.computePackUrl(pack)).to.equal(expectedUrl);
   });
 
-  describe("with no currentUser", function () {
+  describe("with no current user", function () {
     beforeEach(function () {
       $scope.currentUser = null;
     });

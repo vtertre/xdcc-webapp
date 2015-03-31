@@ -5,14 +5,12 @@ var sinon = require("sinon");
 
 describe("OrchestratorController", function () {
 
-  var $scope, $location, USER_ROLES, AUTH_EVENTS, AuthenticationService, Session, socket, controller;
+  var $scope, AUTH_EVENTS, AuthenticationService, Session, socket, controller;
 
   beforeEach(function () {
     $scope = {
       $on: sinon.spy()
     };
-    $location = {};
-    USER_ROLES = {};
     Session = {
       restoreIfAvailable: sinon.spy()
     };
@@ -20,7 +18,7 @@ describe("OrchestratorController", function () {
     AuthenticationService = {};
     socket = {};
     var ConnectedUserController = require("./orchestrator_controller");
-    controller = new ConnectedUserController($scope, $location, USER_ROLES, AUTH_EVENTS, AuthenticationService, Session, socket);
+    controller = new ConnectedUserController($scope, AUTH_EVENTS, AuthenticationService, Session, socket);
   });
 
   it("must be defined", function () {

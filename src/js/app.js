@@ -3,7 +3,6 @@ var angular = require("angular");
 
 angular.module("xdcc", [
   require("angular-bootstrap"),
-  require("angular-route"),
   require("./common"),
   require("./bot"),
   require("./authentication"),

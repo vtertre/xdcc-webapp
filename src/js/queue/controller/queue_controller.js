@@ -19,6 +19,21 @@ function QueueController($scope, socket, $window) {
     $window.location = pack.url;
   };
 
+  $scope.$watch(self.canStartDownloading, function (canStartDownloading) {
+    if (canStartDownloading && $scope.autoStart) {
+      $scope.currentPack = $scope.queue.shift();
+    }
+  });
+
+  $scope.$watch("currentPack", function (newPack, previousPack) {
+    if (previousPack) {
+      $scope[previousPack.canceled ? "canceled" : "completed"].push(previousPack);
+    }
+    if (newPack) {
+      self.download(newPack);
+    }
+  });
+
   socket.on("xdcc:complete", function (pack) {
     ensurePackMatchesCurrentOne(pack);
     $scope.currentPack = $scope.queue.shift();
@@ -35,21 +50,6 @@ function QueueController($scope, socket, $window) {
     $scope.currentPack.error = error.message;
     $scope.currentPack.canceled = true;
     $scope.currentPack = undefined;
-  });
-
-  $scope.$watch(self.canStartDownloading, function (canStartDownloading) {
-    if (canStartDownloading && $scope.autoStart) {
-      $scope.currentPack = $scope.queue.shift();
-    }
-  });
-
-  $scope.$watch("currentPack", function (newValue, oldValue) {
-    if (oldValue) {
-      $scope[oldValue.canceled ? "canceled" : "completed"].push(oldValue);
-    }
-    if (newValue) {
-      self.download(newValue);
-    }
   });
 
   function ensurePackMatchesCurrentOne(pack) {
