@@ -10,7 +10,8 @@ function AuthenticationService(Session) {
   self.isAuthorized = isAuthorized;
 
   function isAuthenticated() {
-    return !!(Session.user.token &&
+    return !!(Session.user &&
+      Session.user.token &&
       Session.user.id &&
       Session.user.login &&
       Session.user.role === "member");

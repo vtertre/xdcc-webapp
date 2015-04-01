@@ -100,6 +100,12 @@ describe("AuthenticationService", function () {
     expect(service.isAuthorized(["member"])).to.be.false;
   });
 
+  it("must reject a null user", function () {
+    Session.user = null;
+
+    expect(service.isAuthorized(["member"])).to.be.false;
+  });
+
   it("must reject a user who does not have the proper role", function () {
     Session.user = {
       token: "token123",
