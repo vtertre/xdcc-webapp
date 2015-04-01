@@ -30,6 +30,12 @@ describe("AuthenticationService", function () {
     expect(service.isAuthenticated()).to.be.true;
   });
 
+  it("must consider the user unauthenticated when the user is null", function () {
+    Session.user = null;
+
+    expect(service.isAuthenticated()).to.be.false;
+  });
+
   it("must consider the user unauthenticated when the token is null", function () {
     Session.user = {
       token: null,
