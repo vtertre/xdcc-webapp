@@ -17,13 +17,13 @@ function BotController($scope, bot, ORDER_OPTIONS) {
     $scope.queue.push(pack);
   }
 
-  self.computePackUrl = function(file) {
-    return $scope.currentUser ? getUrlString(file.packId) : null;
+  self.computePackUrl = function(pack) {
+    return $scope.currentUser ? getUrlString(pack.position) : null;
   };
 
-  function getUrlString(packId) {
+  function getUrlString(packPosition) {
     return "/bot/" + $scope.bot.id +
-      "/pack/" + packId +
+      "/pack/" + packPosition +
       "/download?bn=" + encodeURIComponent($scope.bot.name) +
       "&u=" + encodeURIComponent($scope.currentUser.id) +
       "&t=" + encodeURIComponent($scope.currentUser.token);

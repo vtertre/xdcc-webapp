@@ -22,7 +22,7 @@ describe("BotController", function () {
       id: "botId",
       name: "a_bot_with_%_special_$$_[characters]",
       fileSet: [
-        { name: "packName", packId: 1 }
+        { name: "packName", position: 1, id: "1234" }
       ]
     };
     var BotController = require("./bot_controller");
@@ -53,7 +53,7 @@ describe("BotController", function () {
     var pack = bot.fileSet[0];
 
     var expectedUrl = "/bot/" + bot.id +
-      "/pack/" + pack.packId +
+      "/pack/" + pack.position +
       "/download?bn=" + encodeURIComponent(bot.name) +
       "&u=" + encodeURIComponent($scope.currentUser.id) +
       "&t=" + encodeURIComponent($scope.currentUser.token);

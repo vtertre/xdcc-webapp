@@ -10,9 +10,9 @@
   .row
     .col-sm-8.col-sm-offset-2
       .pack-list-group
-        .pack-row(ng-repeat="pack in bot.fileSet | filter:fileFilter | orderBy:'packId':sortOrder")
+        .pack-row(ng-repeat="pack in bot.fileSet | filter:fileFilter | orderBy:'position':sortOrder")
           .col-sm-1.pack-id
-            span \#{{ pack.packId }}
+            span \#{{ pack.position }}
           .col-sm-9.pack-name
             span {{ pack.name }}
           .col-sm-2.pack-action.text-right
