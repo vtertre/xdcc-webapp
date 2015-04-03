@@ -9,10 +9,10 @@ function BotController($scope, bot, ORDER_OPTIONS) {
   $scope.orderOptions = ORDER_OPTIONS;
   $scope.sortOrder = ORDER_OPTIONS.descending;
 
-  $scope.addToDownloadQueue = addToDownloadQueue;
+  $scope.addToQueue = addToQueue;
   $scope.isPackInQueue = isPackInQueue;
 
-  function addToDownloadQueue(pack) {
+  function addToQueue(pack) {
     pack.url = self.computePackUrl(pack);
     pack.botName = bot.name;
     $scope.queue.push(pack);

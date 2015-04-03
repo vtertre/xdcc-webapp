@@ -18,7 +18,7 @@
             span {{ pack.name }}
           .col-sm-2.pack-action.text-right
             a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated() && !isPackInQueue(pack)",
-                ng-click="addToDownloadQueue(pack)", aria-label="Download", title=t('app.bot.add_to_queue'))
+                ng-click="addToQueue(pack)", aria-label="Download", title=t('app.bot.add_to_queue'))
               span.glyphicon.glyphicon-plus(aria-hidden="true")
             a.btn.btn-default.btn-sm.disabled(type="button", aria-label="Inspect", title=t('app.bot.inspect'))
               span.glyphicon.glyphicon-eye-open(aria-hidden="true")

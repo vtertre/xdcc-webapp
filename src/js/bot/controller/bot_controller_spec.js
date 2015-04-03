@@ -45,7 +45,7 @@ describe("BotController", function () {
 
   it("must add a pack to the download queue with an URL", function () {
     var pack = { id: 1 };
-    $scope.addToDownloadQueue(pack);
+    $scope.addToQueue(pack);
 
     var queuePack = $scope.queue.get(pack.id);
 
@@ -56,7 +56,7 @@ describe("BotController", function () {
 
   it("can know if a pack is in the queue", function () {
     var pack = { id: "1234", name: "name of the pack" };
-    $scope.addToDownloadQueue(pack);
+    $scope.addToQueue(pack);
 
     expect($scope.isPackInQueue(pack)).to.be.true;
   });
