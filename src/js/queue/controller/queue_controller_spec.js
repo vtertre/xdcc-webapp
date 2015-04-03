@@ -53,7 +53,7 @@ describe("QueueController", function () {
   });
 
   it("must start a new download as soon as a pack is added to the queue", function () {
-    $scope.queue = [{ url: "/pack/1" }, { url: "/pack/2" }];
+    $scope.queue.push({ url: "/pack/1" }, { url: "/pack/2" });
     $scope.change(controller.canStartDownloading, true);
 
     expect($scope.currentPack.url).to.equal("/pack/1");
@@ -104,14 +104,14 @@ describe("QueueController", function () {
   });
 
   it("can start to download when none is in progress and the queue is not empty", function () {
-    $scope.queue = [{}];
+    $scope.queue.push({});
 
     expect(controller.canStartDownloading()).to.be.true;
   });
 
   it("cannot start downloading when a download is in progress", function () {
     $scope.currentPack = {};
-    $scope.queue = [{}];
+    $scope.queue.push({});
 
     expect(controller.canStartDownloading()).to.be.false;
   });
@@ -125,7 +125,7 @@ describe("QueueController", function () {
     var pendingPack = { name: "pending" };
 
     beforeEach(function () {
-      $scope.queue = [pendingPack];
+      $scope.queue.push(pendingPack);
     });
 
     it("must start the next download when the previous one is complete", function () {
@@ -185,7 +185,7 @@ describe("QueueController", function () {
     });
 
     it("must not start a new download when a pack is added to the queue", function () {
-      $scope.queue = [{ url: "/pack/1" }, { url: "/pack/2" }];
+      $scope.queue.push({ url: "/pack/1" }, { url: "/pack/2" });
       $scope.change(controller.canStartDownloading, true);
 
       expect($scope.currentPack).to.be.undefined;
