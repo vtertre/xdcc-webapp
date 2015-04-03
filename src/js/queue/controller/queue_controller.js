@@ -2,10 +2,12 @@
 
 module.exports = QueueController;
 
+var Queue = require("../model/queue");
+
 /* @ngInject */
 function QueueController($scope, socket, $window) {
   var self = this;
-  $scope.queue = [];
+  $scope.queue = new Queue();
   $scope.completed = [];
   $scope.canceled = [];
   $scope.currentPack = undefined;
