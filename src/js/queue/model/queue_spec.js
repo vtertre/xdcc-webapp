@@ -32,4 +32,14 @@ describe("Queue", function () {
     expect(queue.packMap[firstPack.id]).to.be.undefined;
     expect(queue.length).to.equal(0);
   });
+
+  it("removes a pack from the queue", function () {
+    var pack = { name: "name of the pack", id: "1234567" };
+    queue.push(pack);
+
+    queue.remove(pack.id);
+
+    expect(queue.packIdQueue.indexOf(pack.id)).to.equal(-1);
+    expect(queue.length).to.equal(0);
+  });
 });

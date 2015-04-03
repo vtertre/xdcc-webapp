@@ -2,13 +2,15 @@
 
 var expect = require("chai").use(require("sinon-chai")).expect;
 
+var Queue = require("../model/queue");
+
 describe("QueueActionController", function () {
 
   var $scope, controller;
 
   beforeEach(function () {
     $scope = {
-      queue: []
+      queue: new Queue()
     };
     var QueueActionController = require("./queue_action_controller");
     controller = new QueueActionController($scope);
@@ -20,11 +22,8 @@ describe("QueueActionController", function () {
 
   it("must remove a pack from the download queue", function () {
     var packToRemove = {id: 1};
-    $scope.queue.push({id: 0}, packToRemove, {id: 2});
-    $scope.removePack(1);
-    expect($scope.queue).to.have.length(2);
-    for (var i = 0; i < $scope.queue.length; ++i) {
-      expect($scope.queue[i].id).to.not.equal(packToRemove.id);
-    }
+    $scope.queue.push(packToRemove);
+    $scope.removePack(packToRemove.id);
+    expect($scope.queue.length).to.equal(0);
   });
 });
