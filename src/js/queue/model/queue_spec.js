@@ -21,6 +21,15 @@ describe("Queue", function () {
     expect(queue.length).to.equal(1);
   });
 
+  it("retrieves a pack from the queue", function () {
+    var pack = { name: "name of the pack", id: "1234567" };
+    queue.push(pack);
+
+    var retrievedPack = queue.get(pack.id);
+
+    expect(retrievedPack).to.deep.equal(pack);
+  });
+
   it("shifts the first pack from the queue", function () {
     var pack = { name: "name of the pack", id: "1234567" };
     queue.push(pack);
@@ -31,6 +40,15 @@ describe("Queue", function () {
     expect(queue.packIdQueue.indexOf(firstPack.id)).to.equal(-1);
     expect(queue.packMap[firstPack.id]).to.be.undefined;
     expect(queue.length).to.equal(0);
+  });
+
+  it("is aware of the packs it contains", function () {
+    var pack = { name: "name of the pack", id: "1234567" };
+    var packNotInQueue = { name: "name of the pack", id: "7654321" };
+    queue.push(pack);
+
+    expect(queue.contains(pack)).to.be.true;
+    expect(queue.contains(packNotInQueue)).to.be.false;
   });
 
   it("removes a pack from the queue", function () {

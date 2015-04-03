@@ -2,6 +2,8 @@
 
 var expect = require("chai").use(require("sinon-chai")).expect;
 
+var Queue = require("../../queue/model/queue");
+
 describe("BotController", function () {
 
   var $scope, ORDER_OPTIONS, controller, bot;
@@ -12,7 +14,7 @@ describe("BotController", function () {
         token: "_%token123%_",
         id: "userId"
       },
-      queue: []
+      queue: new Queue()
     };
     ORDER_OPTIONS = {
       ascending: "ascending",
@@ -42,11 +44,21 @@ describe("BotController", function () {
   });
 
   it("must add a pack to the download queue with an URL", function () {
-    var pack = {id: 1};
+    var pack = { id: 1 };
     $scope.addToDownloadQueue(pack);
-    expect($scope.queue).to.have.length(1);
-    expect($scope.queue[0].botName).to.equal(bot.name);
-    expect($scope.queue[0].url).to.be.ok;
+
+    var queuePack = $scope.queue.get(pack.id);
+
+    expect($scope.queue.length).to.equal(1);
+    expect(queuePack.botName).to.equal(bot.name);
+    expect(queuePack.url).to.be.defined;
+  });
+
+  it("can know if a pack is in the queue", function () {
+    var pack = { id: "1234", name: "name of the pack" };
+    $scope.addToDownloadQueue(pack);
+
+    expect($scope.isPackInQueue(pack)).to.be.true;
   });
 
   it("must compute the URL to download a pack", function () {

@@ -10,13 +10,14 @@
   .row
     .col-sm-8.col-sm-offset-2
       .pack-list-group
-        .pack-row(ng-repeat="pack in bot.fileSet | filter:fileFilter | orderBy:'position':sortOrder")
+        .pack-row(ng-repeat="pack in bot.fileSet | filter:fileFilter | orderBy:'position':sortOrder",
+            ng-class="{ 'pack-row-success': isPackInQueue(pack) }")
           .col-sm-1.pack-id
             span \#{{ pack.position }}
           .col-sm-9.pack-name
             span {{ pack.name }}
           .col-sm-2.pack-action.text-right
-            a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated()",
+            a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated() && !isPackInQueue(pack)",
                 ng-click="addToDownloadQueue(pack)", aria-label="Download", title=t('app.bot.add_to_queue'))
               span.glyphicon.glyphicon-plus(aria-hidden="true")
             a.btn.btn-default.btn-sm.disabled(type="button", aria-label="Inspect", title=t('app.bot.inspect'))

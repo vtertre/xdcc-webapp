@@ -13,11 +13,19 @@ function Queue() {
     ++this.length;
   };
 
+  this.get = function (packId) {
+    return this.packMap[packId];
+  };
+
   this.shift = function () {
     var pack = this.packMap[this.packIdQueue.shift()];
     delete this.packMap[pack.id];
     --this.length;
     return pack;
+  };
+
+  this.contains = function (pack) {
+    return !!(this.packMap[pack.id]);
   };
 
   this.remove = function (packId) {

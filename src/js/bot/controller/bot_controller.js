@@ -10,11 +10,16 @@ function BotController($scope, bot, ORDER_OPTIONS) {
   $scope.sortOrder = ORDER_OPTIONS.descending;
 
   $scope.addToDownloadQueue = addToDownloadQueue;
+  $scope.isPackInQueue = isPackInQueue;
 
   function addToDownloadQueue(pack) {
     pack.url = self.computePackUrl(pack);
     pack.botName = bot.name;
     $scope.queue.push(pack);
+  }
+
+  function isPackInQueue(pack) {
+    return ($scope.currentPack && $scope.currentPack.id === pack.id) || $scope.queue.contains(pack);
   }
 
   self.computePackUrl = function(pack) {
