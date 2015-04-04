@@ -54,7 +54,8 @@
     "angular-bootstrap": "./public/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
     "angular-route": "./public/bower_components/angular-route/angular-route.js",
     "angular-socket-io": "./public/bower_components/angular-socket-io/socket.js",
-    "angular-locker": "./public/bower_components/angular-locker/dist/angular-locker.js"
+    "angular-locker": "./public/bower_components/angular-locker/dist/angular-locker.js",
+    "angular-loading-bar": "./public/bower_components/angular-loading-bar/build/loading-bar.js"
   },
   "browserify-shim": "./shim.js"
 }

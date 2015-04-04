@@ -38,5 +38,11 @@ module.exports = {
       "angular": "angular"
     },
     "exports": "angular.module('angular-locker').name"
+  },
+  "angular-loading-bar": {
+    "depends": {
+      "angular": "angular"
+    },
+    "exports": "angular.module('angular-loading-bar').name"
   }
 };
