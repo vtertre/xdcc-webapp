@@ -11,6 +11,7 @@
     "menu": {
       "bots": "Bots",
       "queue": "File",
+      "search_placeholder": "Rechercher un bot",
       "log_in": "Se connecter",
       "log_out": "Se déconnecter"
     },

@@ -40,6 +40,12 @@ html
                 a(href="#/bot")= t("app.menu.bots")
               li(ng-class="{active: isCurrentLocation('/queue')}")
                 a(href="#/queue")= t("app.menu.queue")
+            form.navbar-form.navbar-left(role="search", ng-controller="SearchController")
+              .form-group
+                input.form-control(type="text", placeholder=t("app.menu.search_placeholder"), ng-model="selection",
+                    typeahead="bot.name for bot in search($viewValue)",
+                    typeahead-loading="loading", typeahead-on-select="select($item)"
+                )
             .navbar-right
               ul.nav.navbar-nav
                 li.login(ng-cloak="", ng-if="!currentUser")

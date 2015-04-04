@@ -8,7 +8,8 @@ angular.module("xdcc", [
   require("./common"),
   require("./bot"),
   require("./authentication"),
-  require("./queue")
+  require("./queue"),
+  require("./search")
 ])
   .config(["$routeProvider", function ($routeProvider) {
     $routeProvider

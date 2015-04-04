@@ -11,6 +11,7 @@
     "menu": {
       "bots": "Bots",
       "queue": "Queue",
+      "search_placeholder": "Search a bot",
       "log_in": "Log in",
       "log_out": "Log out"
     },
