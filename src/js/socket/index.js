@@ -1,4 +1,10 @@
 "use strict";
-module.exports = require("angular").module("socket", [require("angular-socket-io")])
-  .factory("socket", require("./service/socket_factory"))
-  .name;
+
+var angular = require("angular");
+
+var socketModule = angular.module("socket", [require("angular-socket-io")]);
+
+socketModule
+  .factory("socket", require("./service/socket_factory"));
+
+module.exports = socketModule.name;

@@ -1,9 +1,15 @@
 "use strict";
-module.exports = require("angular").module("bot", [require("angular-resource")])
+
+var angular = require("angular");
+
+var botModule = angular.module("bot", [require("angular-resource")]);
+
+botModule
   .controller("BotListController", require("./controller/bot_list_controller"))
   .controller("BotController", require("./controller/bot_controller"))
-  .factory("Bots", require("./resource/bots_resource"))
+  .factory("Bots", require("./resource/bots_resource"));
 
+botModule
   .config(["$routeProvider", function ($routeProvider) {
     $routeProvider
       .when("/bot", {
@@ -24,5 +30,6 @@ module.exports = require("angular").module("bot", [require("angular-resource")])
           }]
         }
       });
-  }])
-  .name;
+  }]);
+
+module.exports = botModule.name;

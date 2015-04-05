@@ -1,9 +1,15 @@
 "use strict";
-module.exports = require("angular").module("authentication", [require("angular-locker")])
+
+var angular = require("angular");
+
+var authenticationModule = angular.module("authentication", [require("angular-locker")]);
+
+authenticationModule
   .service("AuthenticationService", require("./service/authentication_service"))
   .service("Session", require("./service/session_service"))
-  .factory("AuthInterceptor", require("./service/auth_interceptor_factory"))
+  .factory("AuthInterceptor", require("./service/auth_interceptor_factory"));
 
+authenticationModule
   .config(["$httpProvider", function ($httpProvider) {
     $httpProvider.interceptors.push("AuthInterceptor");
   }])
@@ -46,5 +52,6 @@ module.exports = require("angular").module("authentication", [require("angular-l
         }
       });
     }
-  ])
-  .name;
+  ]);
+
+module.exports = authenticationModule.name;

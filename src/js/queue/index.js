@@ -1,13 +1,20 @@
 "use strict";
-module.exports = require("angular").module("queue", [require("../socket")])
-  .controller("QueueController", require("./controller/queue_controller"))
-  .controller("QueueActionController", require("./controller/queue_action_controller"))
 
+var angular = require("angular");
+
+var queueModule = angular.module("queue", [require("../socket")]);
+
+queueModule
+  .controller("QueueController", require("./controller/queue_controller"))
+  .controller("QueueActionController", require("./controller/queue_action_controller"));
+
+queueModule
   .config(["$routeProvider", function ($routeProvider) {
     $routeProvider
       .when("/queue", {
         controller: "QueueActionController",
         templateUrl: "/templates/queue/index"
       });
-  }])
-  .name;
+  }]);
+
+module.exports = queueModule.name;
