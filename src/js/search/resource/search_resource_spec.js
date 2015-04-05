@@ -22,7 +22,7 @@ describe("Search", function () {
   it("must send a well formed GET request", function () {
     resource.search("query");
 
-    expect($http.get).to.have.been.calledWith("/api/bot/search", {params: {q: "query"}});
+    expect($http.get).to.have.been.calledWith("/api/search", {params: {q: "query"}});
   });
 
   it("must return the result of the GET request", function () {
