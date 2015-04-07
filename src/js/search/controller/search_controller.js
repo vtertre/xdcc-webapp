@@ -2,6 +2,7 @@
 
 module.exports = SearchController;
 
+/* @ngInject */
 function SearchController($scope, $window, Search) {
   $scope.loading = false;
 
