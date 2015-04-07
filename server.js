@@ -38,7 +38,9 @@ if ("staging" === app.get("env")) {
 
 if ("production" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
-  app.locals.apiUrl = process.env.API_URL;
+  app.locals.apiUrl = "https://xdcc-api.herokuapp.com";
+
+  loginApp = require("./subapp/xdcc-login/app").app;
 }
 
 app.use("/login", loginApp);
