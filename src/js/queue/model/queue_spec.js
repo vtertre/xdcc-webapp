@@ -42,6 +42,12 @@ describe("Queue", function () {
     expect(queue.length).to.equal(0);
   });
 
+  it("must return undefined when shifting an empty queue", function () {
+    var pack = queue.shift();
+
+    expect(pack).to.be.undefined;
+  });
+
   it("is aware of the packs it contains", function () {
     var pack = { name: "name of the pack", id: "1234567" };
     var packNotInQueue = { name: "name of the pack", id: "7654321" };

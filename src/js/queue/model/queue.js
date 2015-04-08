@@ -19,8 +19,10 @@ function Queue() {
 
   this.shift = function () {
     var pack = this.packMap[this.packIdQueue.shift()];
-    delete this.packMap[pack.id];
-    --this.length;
+    if (pack) {
+      delete this.packMap[pack.id];
+      --this.length;
+    }
     return pack;
   };
 
