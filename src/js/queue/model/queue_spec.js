@@ -66,4 +66,13 @@ describe("Queue", function () {
     expect(queue.packIdQueue.indexOf(pack.id)).to.equal(-1);
     expect(queue.length).to.equal(0);
   });
+
+  it("must properly handle removing a pack which is not in the queue", function () {
+    var pack = { name: "name of the pack", id: "1234567" };
+    queue.push(pack);
+
+    queue.remove("id_not_in_queue");
+
+    expect(queue.length).to.equal(1);
+  });
 });

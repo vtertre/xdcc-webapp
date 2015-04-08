@@ -32,8 +32,10 @@ function Queue() {
 
   this.remove = function (packId) {
     var index = this.packIdQueue.indexOf(packId);
-    this.packIdQueue.splice(index, 1);
-    delete this.packMap[packId];
-    --this.length;
+    if (index !== -1) {
+      this.packIdQueue.splice(index, 1);
+      delete this.packMap[packId];
+      --this.length;
+    }
   };
 }
