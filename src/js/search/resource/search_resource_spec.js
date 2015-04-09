@@ -11,8 +11,8 @@ describe("Search", function () {
     $http = {
       get: sinon.stub()
     };
-    var Bots = require("./search_resource");
-    resource = new Bots($http);
+    var Search = require("./search_resource");
+    resource = new Search($http);
   });
 
   it("must be defined", function () {
