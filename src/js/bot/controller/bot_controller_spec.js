@@ -1,12 +1,13 @@
 "use strict";
 
 var expect = require("chai").use(require("sinon-chai")).expect;
+var sinon = require("sinon");
 
 var Queue = require("../../queue/model/queue");
 
 describe("BotController", function () {
 
-  var $scope, ORDER_OPTIONS, controller, bot;
+  var $scope, bot, Subtitles, ORDER_OPTIONS, controller;
 
   beforeEach(function () {
     $scope = {
@@ -16,10 +17,6 @@ describe("BotController", function () {
       },
       queue: new Queue()
     };
-    ORDER_OPTIONS = {
-      ascending: "ascending",
-      descending: "descending"
-    };
     bot = {
       id: "botId",
       name: "a_bot_with_%_special_$$_[characters]",
@@ -27,8 +24,15 @@ describe("BotController", function () {
         { name: "packName", position: 1, id: "1234" }
       ]
     };
+    Subtitles = {
+      getDownloadUrl: sinon.stub()
+    };
+    ORDER_OPTIONS = {
+      ascending: "ascending",
+      descending: "descending"
+    };
     var BotController = require("./bot_controller");
-    controller = new BotController($scope, bot, ORDER_OPTIONS);
+    controller = new BotController($scope, bot, Subtitles, ORDER_OPTIONS);
   });
 
   it("must be defined", function () {
@@ -67,10 +71,19 @@ describe("BotController", function () {
     var expectedUrl = "/bot/" + bot.id +
       "/pack/" + pack.position +
       "/download?bn=" + encodeURIComponent(bot.name) +
-      "&u=" + encodeURIComponent($scope.currentUser.id) +
+      "&u=" + $scope.currentUser.id +
       "&t=" + encodeURIComponent($scope.currentUser.token);
 
     expect(controller.computePackUrl(pack)).to.equal(expectedUrl);
+  });
+
+  it("must retrieve the URL to download the subtitles of a given pack", function () {
+    Subtitles.getDownloadUrl.returns("/path/to/subtitles");
+    var pack = {name: "name_of_the_pack"};
+
+    var url = $scope.getSubtitlesUrl(pack);
+
+    expect(url).to.equal(url);
   });
 
   describe("with no current user", function () {

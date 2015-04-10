@@ -23,6 +23,7 @@ i18n.init({
 
 if ("development" === app.get("env")) {
   app.locals.apiUrl = "http://localhost:8089";
+  app.locals.subtitlesApiUrl = "http://localhost:8085";
   process.env.JWT_SECRET = "devsecret";
   app.use(morgan("combined"));
 
@@ -32,6 +33,7 @@ if ("development" === app.get("env")) {
 if ("staging" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
   app.locals.apiUrl = "https://xdcc-api.herokuapp.com";
+  app.locals.subtitlesApiUrl = "https://xdcc-subtitles.herokuapp.com";
 
   loginApp = require("./subapp/xdcc-login/app").app;
 }
@@ -54,6 +56,12 @@ app.use('/api', proxy(app.locals.apiUrl, {
 app.use('/sessions', proxy(app.locals.apiUrl, {
   forwardPath: function (req, res) {
     return "/sessions" + require('url').parse(req.url).path;
+  }
+}));
+
+app.use('/sub-api', proxy(app.locals.subtitlesApiUrl, {
+  forwardPath: function (req, res) {
+    return "/subtitles" + require('url').parse(req.url).path;
   }
 }));
 

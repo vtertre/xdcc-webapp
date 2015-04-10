@@ -9,7 +9,8 @@ angular.module("xdcc", [
   require("./bot"),
   require("./authentication"),
   require("./queue"),
-  require("./search")
+  require("./search"),
+  require("./subtitle")
 ])
   .config(["$routeProvider", function ($routeProvider) {
     $routeProvider

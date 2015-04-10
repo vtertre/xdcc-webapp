@@ -3,10 +3,10 @@
     .col-sm-4.col-sm-offset-2.search-field
       input.form-control(type="text", placeholder=t("app.bot.search"), ng-model="fileFilter")
     .col-sm-2.sort.btn-group
-        label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ascending")
-          span.glyphicon.glyphicon-sort-by-order
-        label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.descending")
-          span.glyphicon.glyphicon-sort-by-order-alt
+      label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ascending")
+        span.glyphicon.glyphicon-sort-by-order
+      label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.descending")
+        span.glyphicon.glyphicon-sort-by-order-alt
   .row
     .col-sm-8.col-sm-offset-2
       .pack-list-group
@@ -17,8 +17,11 @@
           .col-sm-9.pack-name
             span {{ pack.name }}
           .col-sm-2.pack-action.text-right
-            a.btn.btn-default.btn-sm(type="button", ng-if="isAuthenticated() && !isPackInQueue(pack)",
-                ng-click="addToQueue(pack)", aria-label="Download", title=t('app.bot.add_to_queue'))
+            a.btn.btn-default.btn-sm(type="button", ng-show="isAuthenticated() && !isPackInQueue(pack)",
+                ng-click="addToQueue(pack)", aria-label=t('app.bot.add_to_queue'), title=t('app.bot.add_to_queue'))
               span.glyphicon.glyphicon-plus(aria-hidden="true")
-            a.btn.btn-default.btn-sm.disabled(type="button", aria-label="Inspect", title=t('app.bot.inspect'))
+            a.btn.btn-default.btn-sm(type="button", ng-href="{{getSubtitlesUrl(pack)}}", download="",
+                aria-label=t('app.bot.download_subtitles'), title=t('app.bot.download_subtitles'))
+              span.glyphicon.glyphicon-subtitles(aria-hidden="true")
+            a.btn.btn-default.btn-sm.disabled(type="button", aria-label=t('app.bot.inspect'), title=t('app.bot.inspect'))
               span.glyphicon.glyphicon-eye-open(aria-hidden="true")

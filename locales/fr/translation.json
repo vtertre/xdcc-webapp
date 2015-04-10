@@ -29,6 +29,7 @@
     "bot": {
       "search": "rechercher un pack...",
       "add_to_queue": "Ajouter à la file",
+      "download_subtitles": "Télécharger les sous-titres",
       "inspect": "Inspecter"
     },
     "queue": {

@@ -29,6 +29,7 @@
     "bot": {
       "search": "search a pack...",
       "add_to_queue": "Add to queue",
+      "download_subtitles": "Download subtitles",
       "inspect": "Inspect"
     },
     "queue": {
