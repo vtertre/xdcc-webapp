@@ -14,9 +14,9 @@
             ng-class="{ 'pack-row-success': isPackInQueue(pack) }")
           .col-sm-1.pack-id
             span \#{{ pack.position }}
-          .col-sm-9.pack-name
+          .col-sm-8.pack-name
             span {{ pack.name }}
-          .col-sm-2.pack-action.text-right
+          .col-sm-3.pack-action.text-right
             a.btn.btn-default.btn-sm(type="button", ng-show="isAuthenticated() && !isPackInQueue(pack)",
                 ng-click="addToQueue(pack)", aria-label=t('app.bot.add_to_queue'), title=t('app.bot.add_to_queue'))
               span.glyphicon.glyphicon-plus(aria-hidden="true")
