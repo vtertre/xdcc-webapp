@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - '0.10'
+
+before_install:
+  - npm install -g grunt-cli
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: BG/Ri8kZwxSaJVx2H/u7M7yvyYPXhAw/dTF0X1GBwfG0ToiRLqroEGzdOw79D+lyi4DkpNEAcE3QsGy2j0WH/rchVF+kRM0qcf0QI4GAaA20sHJyZqmm77yDGKxk04VDGSgY5ZuOSXuW3Mnw6q67tKeC48/yr7uMse2jRVikmMI=
+  app: xdcc-webapp
+  on:
+    repo: Yuyuu/xdcc-webapp
+    branch: staging

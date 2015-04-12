@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app",
     "postinstall": "./node_modules/bower/bin/bower install",
-    "ci": "grunt ci"
+    "test": "grunt test"
   },
   "dependencies": {
     "express": "4.x",
