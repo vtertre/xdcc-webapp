@@ -85,7 +85,7 @@ revision.registerHelper(app);
 i18n.registerAppHelper(app);
 
 var server = http.createServer(app);
-var io = socketIo.listen(server);
+var io = socketIo(server);
 
 var port = process.env.PORT || 5000;
 server.listen(port, function () {
