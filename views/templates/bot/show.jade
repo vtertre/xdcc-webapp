@@ -17,11 +17,11 @@
           .col-sm-8.pack-name
             span {{ pack.name }}
           .col-sm-3.pack-action.text-right
-            a.btn.btn-default.btn-sm(type="button", ng-show="isAuthenticated() && !isPackInQueue(pack)",
+            a.btn.btn-default.btn-sm(type="button", ng-cloak="", ng-show="isAuthenticated() && !isPackInQueue(pack)",
                 ng-click="addToQueue(pack)", aria-label=t('app.bot.add_to_queue'), title=t('app.bot.add_to_queue'))
               span.glyphicon.glyphicon-plus(aria-hidden="true")
-            a.btn.btn-default.btn-sm(type="button", ng-href="{{getSubtitlesUrl(pack)}}", download="",
-                aria-label=t('app.bot.download_subtitles'), title=t('app.bot.download_subtitles'))
+            a.btn.btn-default.btn-sm(type="button", ng-cloak="", ng-if="hasVideoType(pack)", ng-href="{{getSubtitlesUrl(pack)}}",
+                download="", aria-label=t('app.bot.download_subtitles'), title=t('app.bot.download_subtitles'))
               span.glyphicon.glyphicon-subtitles(aria-hidden="true")
             a.btn.btn-default.btn-sm.disabled(type="button", aria-label=t('app.bot.inspect'), title=t('app.bot.inspect'))
               span.glyphicon.glyphicon-eye-open(aria-hidden="true")

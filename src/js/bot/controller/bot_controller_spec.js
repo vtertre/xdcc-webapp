@@ -86,6 +86,15 @@ describe("BotController", function () {
     expect(url).to.equal(url);
   });
 
+  it("must know if a pack has a video type", function () {
+    expect($scope.hasVideoType({name: "name.of.the.pack.avi"})).to.be.true;
+    expect($scope.hasVideoType({name: "name._of_the_pack.mp4"})).to.be.true;
+    expect($scope.hasVideoType({name: "pack.mkv"})).to.be.true;
+    expect($scope.hasVideoType({name: "subtitles.srt"})).to.be.false;
+    expect($scope.hasVideoType({name: "zip_file.zip"})).to.be.false;
+    expect($scope.hasVideoType({name: "no_extension"})).to.be.false;
+  });
+
   describe("with no current user", function () {
     beforeEach(function () {
       $scope.currentUser = null;
