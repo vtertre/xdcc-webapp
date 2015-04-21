@@ -1,7 +1,7 @@
 module.exports = {
   config: {
-    secret: process.env.JWT_SECRET,
-    audience: "xdcc:express-server",
+    secret: process.env.XDCC_WEBAPP_JWT_SECRET,
+    audience: "xdcc:app",
     issuer: "xdcc:sessions",
     getToken: getTokenFromQueryString
   }

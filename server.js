@@ -23,8 +23,9 @@ i18n.init({
 
 if ("development" === app.get("env")) {
   app.locals.apiUrl = "http://localhost:8089";
+  app.locals.sessionsAppUrl = "http://localhost:8087";
   app.locals.subtitlesApiUrl = "http://localhost:8085";
-  process.env.JWT_SECRET = "devsecret";
+  process.env.XDCC_WEBAPP_JWT_SECRET = "development_secret";
   app.use(morgan("combined"));
 
   loginApp = require("../xdcc-login/app").app;
@@ -33,6 +34,7 @@ if ("development" === app.get("env")) {
 if ("staging" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
   app.locals.apiUrl = "https://xdcc-api.herokuapp.com";
+  app.locals.sessionsAppUrl = "https://xdcc-sessions.herokuapp.com";
   app.locals.subtitlesApiUrl = "https://xdcc-subtitles.herokuapp.com";
 
   loginApp = require("./subapp/xdcc-login/app").app;
@@ -49,13 +51,13 @@ app.use("/login", loginApp);
 
 app.use('/api', proxy(app.locals.apiUrl, {
   forwardPath: function (req, res) {
-    return "/xdcc" + require('url').parse(req.url).path;
+    return require('url').parse(req.url).path;
   }
 }));
 
-app.use('/sessions', proxy(app.locals.apiUrl, {
+app.use('/sessions', proxy(app.locals.sessionsAppUrl, {
   forwardPath: function (req, res) {
-    return "/sessions" + require('url').parse(req.url).path;
+    return require('url').parse(req.url).path;
   }
 }));
 
