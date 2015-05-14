@@ -17,7 +17,7 @@
   "strict": true,
   "expr": true,
   "laxbreak": true,
-  "node":true,
+  "node": true,
   "globals": {
     "describe": false,
     "xdescribe": false,
