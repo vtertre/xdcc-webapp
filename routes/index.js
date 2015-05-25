@@ -6,6 +6,13 @@ var downloadRoute = require("./download");
 
 module.exports = function (app) {
   app.get("/", indexRoute.index);
-  app.get(/\/templates\/(.*)/, templatesRoute.serve);
+  app.get(/^\/_ah\/(start|health|stop)$/, function (request, response) {
+    response.set("Content-Type", "text/plain");
+    response.send("OK");
+    if (request.params[0] === "stop") {
+      process.exit();
+    }
+  });
+  app.get(/^\/templates\/(.*)$/, templatesRoute.serve);
   app.get("/bot/:botId/pack/:packId/download", jwt(jwtUtilities.config), downloadRoute.download);
 };

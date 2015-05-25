@@ -1,5 +1,3 @@
-.idea
-*.iml
 node_modules
 public/genere
 public/bower_components
