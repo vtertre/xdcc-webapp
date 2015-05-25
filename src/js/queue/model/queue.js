@@ -8,29 +8,29 @@ function Queue() {
   this.length = 0;
 
   this.push = function (pack) {
-    this.packIdQueue.push(pack.id);
-    this.packMap[pack.id] = pack;
+    var packId = pack.botId + "_" + pack.position;
+    this.packIdQueue.push(packId);
+    this.packMap[packId] = pack;
     ++this.length;
   };
 
-  this.get = function (packId) {
-    return this.packMap[packId];
-  };
-
   this.shift = function () {
-    var pack = this.packMap[this.packIdQueue.shift()];
+    var packId = this.packIdQueue.shift();
+    var pack = this.packMap[packId];
     if (pack) {
-      delete this.packMap[pack.id];
+      delete this.packMap[packId];
       --this.length;
     }
     return pack;
   };
 
   this.contains = function (pack) {
-    return !!(this.packMap[pack.id]);
+    var packId = pack.botId + "_" + pack.position;
+    return !!(this.packMap[packId]);
   };
 
-  this.remove = function (packId) {
+  this.remove = function (pack) {
+    var packId = pack.botId + "_" + pack.position;
     var index = this.packIdQueue.indexOf(packId);
     if (index !== -1) {
       this.packIdQueue.splice(index, 1);

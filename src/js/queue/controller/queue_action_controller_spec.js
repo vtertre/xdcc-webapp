@@ -21,9 +21,9 @@ describe("QueueActionController", function () {
   });
 
   it("must remove a pack from the download queue", function () {
-    var packToRemove = {id: 1};
+    var packToRemove = { title: "title of the pack", position: 2, botId: "1234567" };
     $scope.queue.push(packToRemove);
-    $scope.removePack(packToRemove.id);
+    $scope.removePack(packToRemove);
     expect($scope.queue.length).to.equal(0);
   });
 });

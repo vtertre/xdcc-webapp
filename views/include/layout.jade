@@ -43,7 +43,7 @@ html
             form.navbar-form.navbar-left(role="search", ng-controller="SearchController")
               .form-group
                 input.form-control(type="text", placeholder=t("app.menu.search_placeholder"), ng-model="selection",
-                    typeahead="bot.name for bot in search($viewValue)",
+                    typeahead="bot.nickname for bot in search($viewValue)",
                     typeahead-loading="loading", typeahead-on-select="select($item)"
                 )
             .navbar-right

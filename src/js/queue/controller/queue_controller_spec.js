@@ -60,8 +60,8 @@ describe("QueueController", function () {
   });
 
   it("must start downloading a new pack and set the old one as completed when the current pack changes", function () {
-    var newPack = { name: "newPack", url: "/pack/newPack" };
-    var currentPack = { name: "currentPack" };
+    var newPack = { title: "newPack", url: "/pack/newPack" };
+    var currentPack = { title: "currentPack" };
     $scope.currentPack = currentPack;
     $scope.change("currentPack", newPack);
 
@@ -70,8 +70,8 @@ describe("QueueController", function () {
   });
 
   it("must start downloading a new pack and set the old one as canceled when the previous was canceled", function () {
-    var newPack = { name: "newPack", url: "/pack/newPack" };
-    var currentPack = { name: "currentPack", canceled: true };
+    var newPack = { title: "newPack", url: "/pack/newPack" };
+    var currentPack = { title: "currentPack", canceled: true };
     $scope.currentPack = currentPack;
     $scope.change("currentPack", newPack);
 
@@ -81,7 +81,7 @@ describe("QueueController", function () {
   });
 
   it("must not start downloading a new pack when the new value is null", function () {
-    var currentPack = { name: "currentPack" };
+    var currentPack = { title: "currentPack" };
     $scope.currentPack = currentPack;
     $scope.change("currentPack", null);
 
@@ -90,7 +90,7 @@ describe("QueueController", function () {
   });
 
   it("must not add a new pack as completed if none was downloaded", function () {
-    var newPack = { name: "newPack", url: "/pack/newPack" };
+    var newPack = { title: "newPack", url: "/pack/newPack" };
     $scope.change("currentPack", newPack);
 
     expect($scope.completed).to.have.length(0);
@@ -122,14 +122,14 @@ describe("QueueController", function () {
 
   describe("socket events", function () {
 
-    var pendingPack = { name: "pending" };
+    var pendingPack = { title: "pending" };
 
     beforeEach(function () {
       $scope.queue.push(pendingPack);
     });
 
     it("must start the next download when the previous one is complete", function () {
-      var futureCompleted = { filename: "current", name: "current" };
+      var futureCompleted = { filename: "current", title: "current" };
       $scope.currentPack = futureCompleted;
 
       socket.emit("xdcc:complete", futureCompleted);
@@ -138,16 +138,16 @@ describe("QueueController", function () {
       expect($scope.queue).to.have.length(0);
     });
 
-    it("must not complete the download if the finished pack has a different name", function () {
-      $scope.currentPack = { filename: "current", name: "current" };
+    it("must not complete the download if the finished pack has a different title", function () {
+      $scope.currentPack = { filename: "current", title: "current" };
 
       expect(socket.emit.bind(null, "xdcc:complete", { filename: "different" })).to.throw();
-      expect($scope.currentPack.name).to.equal("current");
+      expect($scope.currentPack.title).to.equal("current");
       expect($scope.queue).to.have.length(1);
     });
 
     it("must start the next download when the previous one is canceled", function () {
-      var futureCanceled = { filename: "current", name: "current" };
+      var futureCanceled = { filename: "current", title: "current" };
       $scope.currentPack = futureCanceled;
 
       socket.emit("xdcc:canceled", futureCanceled);
@@ -156,16 +156,16 @@ describe("QueueController", function () {
       expect($scope.queue).to.have.length(0);
     });
 
-    it("must not start a new download if the canceled pack has a different name", function () {
-      $scope.currentPack = { filename: "current", name: "current" };
+    it("must not start a new download if the canceled pack has a different title", function () {
+      $scope.currentPack = { filename: "current", title: "current" };
 
       expect(socket.emit.bind(null, "xdcc:canceled", { filename: "different" })).to.throw();
-      expect($scope.currentPack.name).to.equal("current");
+      expect($scope.currentPack.title).to.equal("current");
       expect($scope.queue).to.have.length(1);
     });
 
     it("must stop downloading when the previous download had an error", function () {
-      var futurePackWithError = { name: "current" };
+      var futurePackWithError = { title: "current" };
       var error = { message: "an error message" };
       $scope.currentPack = futurePackWithError;
 

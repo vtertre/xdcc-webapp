@@ -18,20 +18,22 @@ function BotController($scope, bot, Subtitles, ORDER_OPTIONS) {
 
   function addToQueue(pack) {
     pack.url = self.computePackUrl(pack);
-    pack.botName = bot.name;
+    pack.botNickname = bot.nickname;
     $scope.queue.push(pack);
   }
 
   function isPackInQueue(pack) {
-    return ($scope.currentPack && $scope.currentPack.id === pack.id) || $scope.queue.contains(pack);
+    return ($scope.currentPack &&
+      $scope.currentPack.botId === pack.botId &&
+      $scope.currentPack.position === pack.position) || $scope.queue.contains(pack);
   }
 
   function getSubtitlesUrl(pack) {
-    return Subtitles.getDownloadUrl(pack.name, "eng");
+    return Subtitles.getDownloadUrl(pack.title, "eng");
   }
 
   function hasVideoType(pack) {
-    return !!(validVideoExtension[extension(pack.name)]);
+    return !!(validVideoExtension[extension(pack.title)]);
   }
 
   self.computePackUrl = function(pack) {
@@ -41,13 +43,13 @@ function BotController($scope, bot, Subtitles, ORDER_OPTIONS) {
   function getUrlString(packPosition) {
     return "/bot/" + $scope.bot.id +
       "/pack/" + packPosition +
-      "/download?bn=" + encodeURIComponent($scope.bot.name) +
+      "/download?bn=" + encodeURIComponent($scope.bot.nickname) +
       "&u=" + $scope.currentUser.id +
       "&t=" + encodeURIComponent($scope.currentUser.token);
   }
 
-  function extension(packName) {
-    var dotIndex = packName.lastIndexOf(".");
-    return (dotIndex <= 0) ? "" : packName.substring(dotIndex);
+  function extension(packTitle) {
+    var dotIndex = packTitle.lastIndexOf(".");
+    return (dotIndex <= 0) ? "" : packTitle.substring(dotIndex);
   }
 }

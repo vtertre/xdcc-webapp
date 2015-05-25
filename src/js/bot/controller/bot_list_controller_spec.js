@@ -13,7 +13,7 @@ describe("BotListController", function () {
       descending: "descending"
     };
     bots = [
-      { botName: "a_bot" }
+      { nickname: "a_bot" }
     ];
     var BotListController = require("./bot_list_controller");
     controller = new BotListController($scope, bots, ORDER_OPTIONS);

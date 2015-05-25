@@ -24,7 +24,7 @@ describe("SearchController", function () {
   });
 
   it("must search and retrieve content based on the query", function () {
-    var response = {data: [{name: "heyhello"}, {name: "hellohello"}]};
+    var response = {data: [{nickname: "heyhello"}, {nickname: "hellohello"}]};
     Search.search.returns({then: function (callback) { return callback(response); }});
 
     var result = $scope.search("hello");
@@ -34,7 +34,7 @@ describe("SearchController", function () {
   });
 
   it("must redirect the user to the page of the selected bot", function () {
-    var bot = {name: "name of the bot", id: "12345"};
+    var bot = {nickname: "nickname of the bot", id: "12345"};
 
     $scope.select(bot);
 

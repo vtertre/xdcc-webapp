@@ -1,7 +1,7 @@
 .container
   .row
     .col-sm-4.col-sm-offset-1.search-field
-      input.form-control(type="text" placeholder=t("app.bot_list.search") ng-model="titleFilter")
+      input.form-control(type="text" placeholder=t("app.bot_list.search") ng-model="nicknameFilter")
     .col-sm-2
       .sort.btn-group
         label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ascending")
@@ -11,5 +11,5 @@
   .row
     .col-sm-10.col-sm-offset-1
       .list-group.bot-list-group
-        a.list-group-item.col-xs-3(ng-repeat="bot in bots | filter:titleFilter | orderBy:'name':sortOrder", ng-href="#/bot/{{bot.id}}")
-          | {{bot.name}}
+        a.list-group-item.col-xs-3(ng-repeat="bot in bots | filter:nicknameFilter | orderBy:'nickname':sortOrder", ng-href="#/bot/{{bot.id}}")
+          | {{bot.nickname}}

@@ -6,7 +6,7 @@ module.exports = QueueActionController;
 function QueueActionController($scope) {
   $scope.removePack = removePack;
 
-  function removePack(packId) {
-    $scope.queue.remove(packId);
+  function removePack(pack) {
+    $scope.queue.remove(pack);
   }
 }

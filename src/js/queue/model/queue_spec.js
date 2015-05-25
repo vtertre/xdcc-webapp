@@ -13,32 +13,23 @@ describe("Queue", function () {
   });
 
   it("adds a pack to the queue", function () {
-    var pack = { name: "name of the pack", id: "1234567" };
+    var pack = { title: "title of the pack", position: 2, botId: "1234567" };
     queue.push(pack);
 
-    expect(queue.packIdQueue[0]).to.equal(pack.id);
-    expect(queue.packMap[pack.id]).to.deep.equal(pack);
+    expect(queue.packIdQueue[0]).to.equal("1234567_2");
+    expect(queue.packMap["1234567_2"]).to.deep.equal(pack);
     expect(queue.length).to.equal(1);
   });
 
-  it("retrieves a pack from the queue", function () {
-    var pack = { name: "name of the pack", id: "1234567" };
-    queue.push(pack);
-
-    var retrievedPack = queue.get(pack.id);
-
-    expect(retrievedPack).to.deep.equal(pack);
-  });
-
   it("shifts the first pack from the queue", function () {
-    var pack = { name: "name of the pack", id: "1234567" };
+    var pack = { title: "title of the pack", position: 2, botId: "1234567" };
     queue.push(pack);
 
     var firstPack = queue.shift();
 
     expect(firstPack).to.deep.equal(pack);
-    expect(queue.packIdQueue.indexOf(firstPack.id)).to.equal(-1);
-    expect(queue.packMap[firstPack.id]).to.be.undefined;
+    expect(queue.packIdQueue.indexOf("1234567_2")).to.equal(-1);
+    expect(queue.packMap["1234567_2"]).to.be.undefined;
     expect(queue.length).to.equal(0);
   });
 
@@ -49,8 +40,8 @@ describe("Queue", function () {
   });
 
   it("is aware of the packs it contains", function () {
-    var pack = { name: "name of the pack", id: "1234567" };
-    var packNotInQueue = { name: "name of the pack", id: "7654321" };
+    var pack = { title: "title of the pack", position: 2, id: "1234567" };
+    var packNotInQueue = { title: "title of the pack", position: 3, id: "7654321" };
     queue.push(pack);
 
     expect(queue.contains(pack)).to.be.true;
@@ -58,20 +49,20 @@ describe("Queue", function () {
   });
 
   it("removes a pack from the queue", function () {
-    var pack = { name: "name of the pack", id: "1234567" };
+    var pack = { title: "title of the pack", position: 2, id: "1234567" };
     queue.push(pack);
 
-    queue.remove(pack.id);
+    queue.remove(pack);
 
-    expect(queue.packIdQueue.indexOf(pack.id)).to.equal(-1);
+    expect(queue.packIdQueue.indexOf("1234567_2")).to.equal(-1);
     expect(queue.length).to.equal(0);
   });
 
   it("must properly handle removing a pack which is not in the queue", function () {
-    var pack = { name: "name of the pack", id: "1234567" };
+    var pack = { title: "title of the pack", position: 2, id: "1234567" };
     queue.push(pack);
 
-    queue.remove("id_not_in_queue");
+    queue.remove({title: "pack not in queue", position: 3, botId: "1234"});
 
     expect(queue.length).to.equal(1);
   });

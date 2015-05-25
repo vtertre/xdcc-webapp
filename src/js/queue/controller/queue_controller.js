@@ -55,7 +55,7 @@ function QueueController($scope, socket, $window) {
   });
 
   function ensurePackMatchesCurrentOne(pack) {
-    if (pack.filename !== $scope.currentPack.name) {
+    if (pack.filename !== $scope.currentPack.title) {
       throw "Completed pack differs from current one.";
     }
   }

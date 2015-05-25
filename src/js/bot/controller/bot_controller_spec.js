@@ -19,9 +19,9 @@ describe("BotController", function () {
     };
     bot = {
       id: "botId",
-      name: "a_bot_with_%_special_$$_[characters]",
-      fileSet: [
-        { name: "packName", position: 1, id: "1234" }
+      nickname: "a_bot_with_%_special_$$_[characters]",
+      packs: [
+        { title: "packTitle", position: 1, botId: "1234" }
       ]
     };
     Subtitles = {
@@ -48,29 +48,29 @@ describe("BotController", function () {
   });
 
   it("must add a pack to the download queue with an URL", function () {
-    var pack = { id: 1 };
+    var pack = { title: "title of the pack", position: 2, botId: "1234567" };
     $scope.addToQueue(pack);
 
-    var queuePack = $scope.queue.get(pack.id);
+    var queuePack = $scope.queue.packMap["1234567_2"];
 
     expect($scope.queue.length).to.equal(1);
-    expect(queuePack.botName).to.equal(bot.name);
+    expect(queuePack.botNickname).to.equal(bot.nickname);
     expect(queuePack.url).to.be.defined;
   });
 
   it("can know if a pack is in the queue", function () {
-    var pack = { id: "1234", name: "name of the pack" };
+    var pack = { title: "title of the pack", position: 2, botId: "1234567" };
     $scope.addToQueue(pack);
 
     expect($scope.isPackInQueue(pack)).to.be.true;
   });
 
   it("must compute the URL to download a pack", function () {
-    var pack = bot.fileSet[0];
+    var pack = bot.packs[0];
 
     var expectedUrl = "/bot/" + bot.id +
       "/pack/" + pack.position +
-      "/download?bn=" + encodeURIComponent(bot.name) +
+      "/download?bn=" + encodeURIComponent(bot.nickname) +
       "&u=" + $scope.currentUser.id +
       "&t=" + encodeURIComponent($scope.currentUser.token);
 
@@ -79,7 +79,7 @@ describe("BotController", function () {
 
   it("must retrieve the URL to download the subtitles of a given pack", function () {
     Subtitles.getDownloadUrl.returns("/path/to/subtitles");
-    var pack = {name: "name_of_the_pack"};
+    var pack = {title: "title_of_the_pack"};
 
     var url = $scope.getSubtitlesUrl(pack);
 
@@ -87,12 +87,12 @@ describe("BotController", function () {
   });
 
   it("must know if a pack has a video type", function () {
-    expect($scope.hasVideoType({name: "name.of.the.pack.avi"})).to.be.true;
-    expect($scope.hasVideoType({name: "name._of_the_pack.mp4"})).to.be.true;
-    expect($scope.hasVideoType({name: "pack.mkv"})).to.be.true;
-    expect($scope.hasVideoType({name: "subtitles.srt"})).to.be.false;
-    expect($scope.hasVideoType({name: "zip_file.zip"})).to.be.false;
-    expect($scope.hasVideoType({name: "no_extension"})).to.be.false;
+    expect($scope.hasVideoType({title: "title.of.the.pack.avi"})).to.be.true;
+    expect($scope.hasVideoType({title: "title._of_the_pack.mp4"})).to.be.true;
+    expect($scope.hasVideoType({title: "pack.mkv"})).to.be.true;
+    expect($scope.hasVideoType({title: "subtitles.srt"})).to.be.false;
+    expect($scope.hasVideoType({title: "zip_file.zip"})).to.be.false;
+    expect($scope.hasVideoType({title: "no_extension"})).to.be.false;
   });
 
   describe("with no current user", function () {
@@ -101,7 +101,7 @@ describe("BotController", function () {
     });
 
     it("must return null as the url of a pack", function () {
-      var pack = bot.fileSet[0];
+      var pack = bot.packs[0];
       expect(controller.computePackUrl(pack)).to.be.null;
     });
   });

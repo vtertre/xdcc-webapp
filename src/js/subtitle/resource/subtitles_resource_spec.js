@@ -16,8 +16,8 @@ describe("Subtitle", function () {
   });
 
   it("must compute the url of a given pack and language", function () {
-    var url = resource.getDownloadUrl("name_of_the_[pack]", "lang");
+    var url = resource.getDownloadUrl("title_of_the_[pack]", "lang");
 
-    expect(url).to.equal("/sub-api/download?l=lang&q=name_of_the_%5Bpack%5D");
+    expect(url).to.equal("/sub-api/download?l=lang&q=title_of_the_%5Bpack%5D");
   });
 });
