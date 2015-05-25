@@ -42,7 +42,7 @@ if ("staging" === app.get("env")) {
 
 if ("production" === app.get("env")) {
   revision.initMap(require("./public/genere/map.json"));
-  app.locals.apiUrl = "https://xdcc-api.herokuapp.com";
+  app.locals.apiUrl = "http://api.xdccdownloader.appspot.com";
   app.locals.sessionsAppUrl = "https://xdcc-sessions.herokuapp.com";
   app.locals.subtitlesApiUrl = "http://subtitles.xdccdownloader.appspot.com";
 
