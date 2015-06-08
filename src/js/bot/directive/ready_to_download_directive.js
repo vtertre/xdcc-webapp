@@ -2,6 +2,7 @@
 
 module.exports = ReadyToDownloadDirective;
 
+/* @ngInject */
 function ReadyToDownloadDirective(ClientStatusService) {
   function link(scope, element) {
     if (ClientStatusService.currentStatus === "ready") {
