@@ -52,7 +52,7 @@ html
                   a.btn.btn-default.btn-navbar(type="button", href="/login")= t("app.menu.log_in")
                 li(ng-if="currentUser")
                   p.navbar-text
-                    span.glyphicon.glyphicon-stop(xdcc-client-state="", aria-hidden="true")
+                    span.glyphicon.glyphicon-stop(xdcc-client-status="", aria-hidden="true")
                 li(ng-cloak="", ng-if="currentUser", ng-controller="ConnectedUserController")
                   a.dropdown-toggle(data-toggle="dropdown", href="")
                     span {{currentUser.login}}&nbsp;

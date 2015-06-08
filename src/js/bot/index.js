@@ -7,7 +7,8 @@ var botModule = angular.module("bot", [require("angular-resource")]);
 botModule
   .controller("BotListController", require("./controller/bot_list_controller"))
   .controller("BotController", require("./controller/bot_controller"))
-  .factory("Bots", require("./resource/bots_resource"));
+  .factory("Bots", require("./resource/bots_resource"))
+  .directive("enableWhenReadyToDownload", require("./directive/ready_to_download_directive"));
 
 botModule
   .config(["$routeProvider", function ($routeProvider) {

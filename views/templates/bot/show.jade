@@ -17,8 +17,8 @@
           .col-sm-8.pack-title
             span {{pack.title}}
           .col-sm-3.pack-action.text-right
-            a.btn.btn-default.btn-sm(type="button", ng-cloak="", ng-show="isAuthenticated() && !isPackInQueue(pack)",
-                ng-click="addToQueue(pack)", aria-label=t('app.bot.add_to_queue'), title=t('app.bot.add_to_queue'))
+            a.btn.btn-default.btn-sm(ng-cloak="", ng-show="isAuthenticated() && !isPackInQueue(pack)", enable-when-ready-to-download="",
+                ng-click="addToQueue(pack)", type="button", aria-label=t('app.bot.add_to_queue'), title=t('app.bot.add_to_queue'))
               span.glyphicon.glyphicon-plus(aria-hidden="true")
             a.btn.btn-default.btn-sm(type="button", ng-cloak="", ng-if="hasVideoType(pack)", ng-href="{{getSubtitlesUrl(pack)}}",
                 download="", aria-label=t('app.bot.download_subtitles'), title=t('app.bot.download_subtitles'))
