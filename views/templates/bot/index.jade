@@ -1,15 +1,16 @@
 .container
   .row
-    .col-sm-4.col-sm-offset-1.search-field
+    .col-xs-7.col-sm-4.col-xs-offset-1.col-sm-offset-2.search-field
       input.form-control(type="text" placeholder=t("app.bot_list.search") ng-model="nicknameFilter")
-    .col-sm-2
+    .col-xs-4.col-sm-2
       .sort.btn-group
         label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.ascending")
           span.glyphicon.glyphicon-sort-by-alphabet
         label.btn.btn-default(ng-model="sortOrder", btn-radio="orderOptions.descending")
           span.glyphicon.glyphicon-sort-by-alphabet-alt
   .row
-    .col-sm-10.col-sm-offset-1
+    .col-xs-12.col-sm-10.col-sm-offset-1
       .list-group.bot-list-group
-        a.list-group-item.col-xs-3(ng-repeat="bot in bots | filter:nicknameFilter | orderBy:'nickname':sortOrder", ng-href="#/bot/{{bot.id}}")
+        a.list-group-item.col-xs-6.col-sm-3(ng-repeat="bot in bots | filter:nicknameFilter | orderBy:'nickname':sortOrder",
+            ng-href="#/bot/{{bot.id}}")
           | {{bot.nickname}}
