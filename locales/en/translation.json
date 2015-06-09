@@ -24,17 +24,17 @@
       }
     },
     "bot_list": {
-      "search": "search a bot..."
+      "search": "Filter by nickname"
     },
     "bot": {
-      "search": "search a pack...",
+      "search": "Filter by title",
       "add_to_queue": "Add to queue",
       "download_subtitles": "Download subtitles",
       "inspect": "Inspect"
     },
     "queue": {
       "empty": "The queue is currently empty",
-      "search": "search a pack...",
+      "search": "Filter by title",
       "remove": "Remove from queue"
     }
   }

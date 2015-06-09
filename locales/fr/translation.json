@@ -24,17 +24,17 @@
       }
     },
     "bot_list": {
-      "search": "rechercher un bot..."
+      "search": "Filtrer par nom"
     },
     "bot": {
-      "search": "rechercher un pack...",
+      "search": "Filtrer par titre",
       "add_to_queue": "Ajouter à la file",
       "download_subtitles": "Télécharger les sous-titres",
       "inspect": "Inspecter"
     },
     "queue": {
       "empty": "La file est actuellement vide",
-      "search": "rechercher un pack...",
+      "search": "Filtrer par titre",
       "remove": "Supprimer de la file"
     }
   }
