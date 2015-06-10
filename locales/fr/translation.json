@@ -34,6 +34,7 @@
     },
     "queue": {
       "empty": "La file est actuellement vide",
+      "current_pack": "Pack en cours de téléchargement",
       "search": "Filtrer par titre",
       "remove": "Supprimer de la file"
     }

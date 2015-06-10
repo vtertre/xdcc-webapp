@@ -66,4 +66,16 @@ describe("Queue", function () {
 
     expect(queue.length).to.equal(1);
   });
+
+  it("must return an array of packs matching the order of the id queue", function () {
+    queue.push({title: "pack 2", position: 2, botId: "1234567"});
+    queue.push({title: "pack 1", position: 1, botId: "1234567"});
+    queue.push({title: "pack 3", position: 3, botId: "1234567"});
+
+    var packsInOrder = queue.getOrderedPacks();
+
+    expect(packsInOrder[0].title).to.equal("pack 2");
+    expect(packsInOrder[1].title).to.equal("pack 1");
+    expect(packsInOrder[2].title).to.equal("pack 3");
+  });
 });

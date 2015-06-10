@@ -1,5 +1,7 @@
 "use strict";
 
+var _ = require("underscore");
+
 module.exports = Queue;
 
 function Queue() {
@@ -39,3 +41,12 @@ function Queue() {
     }
   };
 }
+
+Queue.prototype.getOrderedPacks = function () {
+  var it = this;
+  var orderedPacks = [];
+  _.each(it.packIdQueue, function (packId) {
+    orderedPacks.push(it.packMap[packId]);
+  });
+  return orderedPacks;
+};

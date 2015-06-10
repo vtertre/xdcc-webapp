@@ -34,6 +34,7 @@
     },
     "queue": {
       "empty": "The queue is currently empty",
+      "current_pack": "Pack currently downloading",
       "search": "Filter by title",
       "remove": "Remove from queue"
     }
