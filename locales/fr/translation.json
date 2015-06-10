@@ -3,7 +3,7 @@
   "app": {
     "angularLocale": "francais",
     "title": {
-      "global": "xdcc-webapp"
+      "global": "XDCC Web App"
     },
     "home": {
       "pitch": "Télécharger des fichiers facilement avec "
