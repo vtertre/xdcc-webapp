@@ -29,8 +29,7 @@
     "bot": {
       "search": "Filtrer par titre",
       "add_to_queue": "Ajouter à la file",
-      "download_subtitles": "Télécharger les sous-titres",
-      "inspect": "Inspecter"
+      "download_subtitles": "Télécharger les sous-titres"
     },
     "queue": {
       "empty": "La file est actuellement vide",

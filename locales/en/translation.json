@@ -29,8 +29,7 @@
     "bot": {
       "search": "Filter by title",
       "add_to_queue": "Add to queue",
-      "download_subtitles": "Download subtitles",
-      "inspect": "Inspect"
+      "download_subtitles": "Download subtitles"
     },
     "queue": {
       "empty": "The queue is currently empty",
