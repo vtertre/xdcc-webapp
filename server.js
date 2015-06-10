@@ -73,7 +73,6 @@ i18n.serveClientScript(app)
   .serveDynamicResources(app);
 
 app.use(i18n.handle);
-
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "jade");
 app.use(serveStatic(__dirname + "/public/"));
