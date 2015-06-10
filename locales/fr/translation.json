@@ -21,6 +21,9 @@
         "login": "Identifiant",
         "password": "Mot de passe",
         "log_in": "Se connecter"
+      },
+      "errors": {
+        "INVALID_LOGIN_OR_PASSWORD": "Login ou mot de passe incorrect"
       }
     },
     "bot_list": {

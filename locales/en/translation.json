@@ -21,6 +21,9 @@
         "login": "Login",
         "password": "Password",
         "log_in": "Log in"
+      },
+      "errors": {
+        "INVALID_LOGIN_OR_PASSWORD": "Invalid login or password"
       }
     },
     "bot_list": {
