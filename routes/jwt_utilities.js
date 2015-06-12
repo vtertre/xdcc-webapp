@@ -1,6 +1,10 @@
+"use strict";
+
+var configuration = require("../server/utils/environment_configuration");
+
 module.exports = {
   config: {
-    secret: process.env.XDCC_WEBAPP_JWT_SECRET,
+    secret: configuration.jwtSecret,
     audience: "xdcc:app",
     issuer: "xdcc:sessions",
     getToken: getTokenFromQueryString

@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server.js",
+    "start": "node bin/app.js",
     "postinstall": "./node_modules/bower/bin/bower install",
     "test": "./node_modules/.bin/grunt test"
   },
   "dependencies": {
+    "12factor-config": "^1.0.0",
     "express": "4.x",
     "express-http-proxy": "^0.5.0",
     "express-jwt": "^3.0.0",
