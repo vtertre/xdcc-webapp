@@ -15,6 +15,11 @@
       "log_in": "Se connecter",
       "log_out": "Se déconnecter"
     },
+    "error404": {
+      "title": "乁། ˵ ◕ – ◕ ˵ །ㄏ",
+      "description": "La ressource demandée est introuvable",
+      "back": "Retour à l'accueil"
+    },
     "login": {
       "form": {
         "title": "Connexion à XDCC Web App",

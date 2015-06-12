@@ -11,7 +11,8 @@ angular.module("xdcc", [
   require("./queue"),
   require("./search"),
   require("./subtitle"),
-  require("./status")
+  require("./status"),
+  require("./error")
 ])
   .config(["$routeProvider", function ($routeProvider) {
     $routeProvider
@@ -19,7 +20,7 @@ angular.module("xdcc", [
         templateUrl: "/templates/index"
       })
       .otherwise({
-        redirectTo: "/"
+        redirectTo: "/404"
       });
   }])
 

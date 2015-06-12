@@ -15,4 +15,7 @@ module.exports = function (app) {
   });
   app.get(/^\/templates\/(.*)$/, templatesRoute.serve);
   app.get("/bot/:botId/pack/:packId/download", jwt(jwtUtilities.config), downloadRoute.download);
+  app.get("*", function (request, response) {
+    response.redirect("/#/404");
+  });
 };

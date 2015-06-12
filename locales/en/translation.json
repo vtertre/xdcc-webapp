@@ -15,6 +15,11 @@
       "log_in": "Log in",
       "log_out": "Log out"
     },
+    "error404": {
+      "title": "乁། ˵ ◕ – ◕ ˵ །ㄏ",
+      "description": "The requested resource cannot be found",
+      "back": "Back to home"
+    },
     "login": {
       "form": {
         "title": "Log into XDCC Web App",
