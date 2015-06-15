@@ -1,22 +1,22 @@
 .container
-  .row(ng-cloak="", ng-show="queue.length === 0")
+  .row(ng-cloak="", ng-show="queueCtrl.queue.length === 0")
     .col-sm-4.col-sm-offset-4.text-center.alert.alert-info(role="alert")
        = t("app.queue.empty")
-  .row(ng-cloak="", ng-show="currentPack")
+  .row(ng-cloak="", ng-show="queueCtrl.currentPack")
     .col-sm-10.col-sm-offset-1
       label=t("app.queue.current_pack")
       .current-pack
         .col-sm-3.pack-bot-title
-          span {{currentPack.botNickname}}
+          span {{queueCtrl.currentPack.botNickname}}
         .col-sm-7.pack-title
-          span {{currentPack.title}}
-  .row(ng-cloak="", ng-show="queue.length > 0")
+          span {{queueCtrl.currentPack.title}}
+  .row(ng-cloak="", ng-show="queueCtrl.queue.length > 0")
     .col-sm-4.col-sm-offset-1.search-field
       input.form-control(type="text", placeholder=t("app.queue.search"), ng-model="packFilter")
-  .row(ng-cloak="", ng-show="queue.length > 0")
+  .row(ng-cloak="", ng-show="queueCtrl.queue.length > 0")
     .col-sm-10.col-sm-offset-1
       .pack-list-group
-        .pack-row(ng-repeat="pack in queue.getOrderedPacks() | filter:packFilter")
+        .pack-row(ng-repeat="pack in queueCtrl.queue.getOrderedPacks() | filter:packFilter")
           .col-sm-3.pack-title
             span {{pack.botNickname}}
           .col-sm-7.pack-title

@@ -3,10 +3,10 @@
 module.exports = QueueActionController;
 
 /* @ngInject */
-function QueueActionController($scope) {
+function QueueActionController($scope, QueueService) {
   $scope.removePack = removePack;
 
   function removePack(pack) {
-    $scope.queue.remove(pack);
+    QueueService.queue.remove(pack);
   }
 }

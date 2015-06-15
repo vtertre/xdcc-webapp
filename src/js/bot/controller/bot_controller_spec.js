@@ -7,21 +7,20 @@ var Queue = require("../../queue/model/queue");
 
 describe("BotController", function () {
 
-  var $scope, bot, Subtitles, ORDER_OPTIONS, controller;
+  var $scope, bot, Subtitles, ORDER_OPTIONS, QueueService, controller;
 
   beforeEach(function () {
     $scope = {
       currentUser: {
         token: "_%token123%_",
         id: "userId"
-      },
-      queue: new Queue()
+      }
     };
     bot = {
       id: "botId",
       nickname: "a_bot_with_%_special_$$_[characters]",
       packs: [
-        { title: "packTitle", position: 1, botId: "1234" }
+        {title: "packTitle", position: 1, botId: "1234"}
       ]
     };
     Subtitles = {
@@ -31,8 +30,14 @@ describe("BotController", function () {
       ascending: "ascending",
       descending: "descending"
     };
+    QueueService = {
+      queue: new Queue(),
+      completed: [],
+      canceled: [],
+      currentPack: undefined
+    };
     var BotController = require("./bot_controller");
-    controller = new BotController($scope, bot, Subtitles, ORDER_OPTIONS);
+    controller = new BotController($scope, bot, Subtitles, ORDER_OPTIONS, QueueService);
   });
 
   it("must be defined", function () {
@@ -48,18 +53,18 @@ describe("BotController", function () {
   });
 
   it("must add a pack to the download queue with an URL", function () {
-    var pack = { title: "title of the pack", position: 2, botId: "1234567" };
+    var pack = {title: "title of the pack", position: 2, botId: "1234567"};
     $scope.addToQueue(pack);
 
-    var queuePack = $scope.queue.packMap["1234567_2"];
+    var queuePack = QueueService.queue.packMap["1234567_2"];
 
-    expect($scope.queue.length).to.equal(1);
+    expect(QueueService.queue.length).to.equal(1);
     expect(queuePack.botNickname).to.equal(bot.nickname);
     expect(queuePack.url).to.be.defined;
   });
 
   it("can know if a pack is in the queue", function () {
-    var pack = { title: "title of the pack", position: 2, botId: "1234567" };
+    var pack = {title: "title of the pack", position: 2, botId: "1234567"};
     $scope.addToQueue(pack);
 
     expect($scope.isPackInQueue(pack)).to.be.true;

@@ -3,7 +3,7 @@
 module.exports = BotController;
 
 /* @ngInject */
-function BotController($scope, bot, Subtitles, ORDER_OPTIONS) {
+function BotController($scope, bot, Subtitles, ORDER_OPTIONS, QueueService) {
   var self = this;
   $scope.bot = bot;
   $scope.orderOptions = ORDER_OPTIONS;
@@ -19,13 +19,13 @@ function BotController($scope, bot, Subtitles, ORDER_OPTIONS) {
   function addToQueue(pack) {
     pack.url = self.computePackUrl(pack);
     pack.botNickname = bot.nickname;
-    $scope.queue.push(pack);
+    QueueService.queue.push(pack);
   }
 
   function isPackInQueue(pack) {
-    return ($scope.currentPack &&
-      $scope.currentPack.botId === pack.botId &&
-      $scope.currentPack.position === pack.position) || $scope.queue.contains(pack);
+    return (QueueService.currentPack &&
+      QueueService.currentPack.botId === pack.botId &&
+      QueueService.currentPack.position === pack.position) || QueueService.queue.contains(pack);
   }
 
   function getSubtitlesUrl(pack) {

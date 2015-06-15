@@ -2,61 +2,57 @@
 
 module.exports = QueueController;
 
-var Queue = require("../model/queue");
-
 /* @ngInject */
-function QueueController($scope, socket, $window) {
-  var self = this;
-  $scope.queue = new Queue();
-  $scope.completed = [];
-  $scope.canceled = [];
-  $scope.currentPack = undefined;
-  $scope.autoStart = true;
+function QueueController($scope, socket, QueueService) {
+  var it = this;
+  it.QueueService = QueueService;
+  it.autoStart = true;
 
-  self.canStartDownloading = function () {
-    return !$scope.currentPack && ($scope.queue.length > 0);
+  it.canStartDownloading = function () {
+    return !QueueService.currentPack && (QueueService.queue.length > 0);
   };
 
-  self.download = function (pack) {
-    $window.location = pack.url;
-  };
-
-  $scope.$watch(self.canStartDownloading, function (canStartDownloading) {
-    if (canStartDownloading && $scope.autoStart) {
-      $scope.currentPack = $scope.queue.shift();
-    }
-  });
-
-  $scope.$watch("currentPack", function (newPack, previousPack) {
-    if (previousPack) {
-      $scope[previousPack.canceled ? "canceled" : "completed"].push(previousPack);
-    }
-    if (newPack) {
-      self.download(newPack);
+  $scope.$watch(it.canStartDownloading, function (canStartDownloading) {
+    if (canStartDownloading && it.autoStart) {
+      QueueService.currentPack = QueueService.queue.shift();
     }
   });
 
   socket.on("xdcc:complete", function (pack) {
     ensurePackMatchesCurrentOne(pack);
-    $scope.currentPack = $scope.queue.shift();
+    QueueService.currentPack = QueueService.queue.shift();
   });
 
   socket.on("xdcc:canceled", function (pack) {
     ensurePackMatchesCurrentOne(pack);
-    $scope.currentPack.canceled = true;
-    $scope.currentPack = $scope.queue.shift();
+    QueueService.currentPack.canceled = true;
+    QueueService.currentPack = QueueService.queue.shift();
   });
 
   socket.on("xdcc:dlerror", function (error) {
-    $scope.autoStart = false;
-    $scope.currentPack.error = error.message;
-    $scope.currentPack.canceled = true;
-    $scope.currentPack = undefined;
+    it.autoStart = false;
+    QueueService.currentPack.error = error.message;
+    QueueService.currentPack.canceled = true;
+    QueueService.currentPack = undefined;
   });
 
   function ensurePackMatchesCurrentOne(pack) {
-    if (pack.filename !== $scope.currentPack.title) {
+    if (pack.filename !== QueueService.currentPack.title) {
       throw "Completed pack differs from current one.";
     }
   }
 }
+
+Object.defineProperty(QueueController.prototype, "currentPack", {
+  enumerable: true,
+  get: function () {
+    return this.QueueService.currentPack;
+  }
+});
+
+Object.defineProperty(QueueController.prototype, "queue", {
+  enumerable: true,
+  get: function () {
+    return this.QueueService.queue;
+  }
+});
