@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  color: #5C5C5C;
+  font-family: 'PT Sans', Helvetica, serif;
+  font-size: 14px;
+  background-color: #F5F5F5;
+}
+#login {
+  position: relative;
+  width: 30%;
+  margin-top: 5%;
+  padding: 2em 1.5em;
+}
+#login .title {
+  margin: 1.5em auto;
+  width: 75%;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+.logo a {
+  background: url("/img/icon.png") no-repeat 0 6px;
+  background-size: 40px 40px;
+  display: block;
+  width: 50px;
+  height: 50px;
+  text-indent: -4000px;
+  margin: auto;
+}
+.logo a span {
+  text-indent: -4000px;
+}
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
