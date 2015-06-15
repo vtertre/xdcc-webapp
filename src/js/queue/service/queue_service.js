@@ -5,6 +5,7 @@ var _ = require("underscore");
 
 module.exports = QueueService;
 
+/* @ngInject */
 function QueueService($window) {
   this.$window = $window;
   this.queue = new Queue();

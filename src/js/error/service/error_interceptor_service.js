@@ -2,6 +2,7 @@
 
 module.exports = ErrorInterceptorService;
 
+/* @ngInject */
 function ErrorInterceptorService($q, $location) {
   return {
     responseError: function (rejection) {
