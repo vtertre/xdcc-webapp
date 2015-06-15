@@ -3,8 +3,8 @@
 module.exports = BotListController;
 
 /* @ngInject */
-function BotListController($scope, bots, ORDER_OPTIONS) {
-  $scope.bots = bots;
-  $scope.orderOptions = ORDER_OPTIONS;
-  $scope.sortOrder = ORDER_OPTIONS.ascending;
+function BotListController(bots, ORDER_OPTIONS) {
+  this.bots = bots;
+  this.orderOptions = ORDER_OPTIONS;
+  this.sortOrder = ORDER_OPTIONS.ascending;
 }

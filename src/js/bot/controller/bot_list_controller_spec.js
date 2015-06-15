@@ -4,10 +4,9 @@ var expect = require("chai").use(require("sinon-chai")).expect;
 
 describe("BotListController", function () {
 
-  var $scope, ORDER_OPTIONS, controller, bots;
+  var ORDER_OPTIONS, controller, bots;
 
   beforeEach(function () {
-    $scope = {};
     ORDER_OPTIONS = {
       ascending: "ascending",
       descending: "descending"
@@ -16,7 +15,7 @@ describe("BotListController", function () {
       { nickname: "a_bot" }
     ];
     var BotListController = require("./bot_list_controller");
-    controller = new BotListController($scope, bots, ORDER_OPTIONS);
+    controller = new BotListController(bots, ORDER_OPTIONS);
   });
 
   it("must be defined", function () {
@@ -24,10 +23,10 @@ describe("BotListController", function () {
   });
 
   it("must communicate with the scope", function () {
-    expect($scope.bots).to.equal(bots);
+    expect(controller.bots).to.equal(bots);
   });
 
   it("must use ascending order by default", function () {
-    expect($scope.sortOrder).to.equal($scope.orderOptions.ascending);
+    expect(controller.sortOrder).to.equal(controller.orderOptions.ascending);
   });
 });

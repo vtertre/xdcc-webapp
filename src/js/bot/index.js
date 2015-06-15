@@ -15,6 +15,7 @@ botModule
     $routeProvider
       .when("/bot", {
         controller: "BotListController",
+        controllerAs: "model",
         templateUrl: "/templates/bot/index",
         resolve: {
           bots: ["Bots", function (Bots) {
