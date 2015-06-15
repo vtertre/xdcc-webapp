@@ -14,6 +14,7 @@ queueModule
     $routeProvider
       .when("/queue", {
         controller: "QueueActionController",
+        controllerAs: "model",
         templateUrl: "/templates/queue/index"
       });
   }]);

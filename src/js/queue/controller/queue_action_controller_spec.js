@@ -6,10 +6,9 @@ var Queue = require("../model/queue");
 
 describe("QueueActionController", function () {
 
-  var $scope, QueueService, controller;
+  var QueueService, controller;
 
   beforeEach(function () {
-    $scope = {};
     QueueService = {
       queue: new Queue(),
       completed: [],
@@ -17,7 +16,7 @@ describe("QueueActionController", function () {
       currentPack: undefined
     };
     var QueueActionController = require("./queue_action_controller");
-    controller = new QueueActionController($scope, QueueService);
+    controller = new QueueActionController(QueueService);
   });
 
   it("must be defined", function () {
@@ -27,7 +26,7 @@ describe("QueueActionController", function () {
   it("must remove a pack from the download queue", function () {
     var packToRemove = {title: "title of the pack", position: 2, botId: "1234567"};
     QueueService.queue.push(packToRemove);
-    $scope.removePack(packToRemove);
+    controller.removePack(packToRemove);
     expect(QueueService.queue.length).to.equal(0);
   });
 });

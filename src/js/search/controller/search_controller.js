@@ -3,22 +3,23 @@
 module.exports = SearchController;
 
 /* @ngInject */
-function SearchController($scope, $window, Search) {
-  $scope.loading = false;
+function SearchController($window, Search) {
+  var it = this;
+  it.loading = false;
 
-  $scope.search = search;
-  $scope.select = select;
+  it.search = search;
+  it.select = select;
 
   function search(query) {
-    $scope.loading = true;
+    it.loading = true;
     return Search.search(query).then(function (response) {
-      $scope.loading = false;
+      it.loading = false;
       return response.data;
     });
   }
 
   function select(bot) {
     $window.location.href = "#/bot/" + bot.id;
-    $scope.selection = undefined;
+    it.selection = undefined;
   }
 }
