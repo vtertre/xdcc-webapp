@@ -36,12 +36,6 @@ function Server() {
   new ProxyHelper().configure(app);
   new Router().configure(app);
 
-  app.use(function (error, request, response, next) {
-    if (error && error.status === 401) {
-      response.redirect(401, "/login");
-    }
-  });
-
   var io = socketIo(server);
   configureSockets(io);
 

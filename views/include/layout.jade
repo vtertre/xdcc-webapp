@@ -40,7 +40,7 @@ html
             .navbar-right
               ul.nav.navbar-nav
                 li.login(ng-cloak="", ng-if="!currentUser")
-                  a.btn.btn-default.btn-navbar(type="button", href="/login")= t("app.menu.log_in")
+                  a.btn.btn-default.btn-navbar(type="button", href="/login/")= t("app.menu.log_in")
                 li(ng-cloak="", ng-if="currentUser")
                   p.navbar-text
                     span.glyphicon.glyphicon-stop(xdcc-client-status="", aria-hidden="true")

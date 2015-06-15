@@ -18,4 +18,10 @@ module.exports = function (app) {
   app.get("*", function (request, response) {
     response.redirect("/#/404");
   });
+
+  app.use(function (error, request, response, next) {
+    if (error && error.status === 401) {
+      response.redirect("/login/#/?r=TOKEN_EXPIRED");
+    }
+  });
 };

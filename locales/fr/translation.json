@@ -28,6 +28,7 @@
         "log_in": "Se connecter"
       },
       "errors": {
+        "TOKEN_EXPIRED": "Votre session a expiré",
         "INVALID_LOGIN_OR_PASSWORD": "Login ou mot de passe incorrect"
       }
     },
