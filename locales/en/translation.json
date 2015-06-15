@@ -15,10 +15,17 @@
       "log_in": "Log in",
       "log_out": "Log out"
     },
-    "error404": {
-      "title": "乁། ˵ ◕ – ◕ ˵ །ㄏ",
-      "description": "The requested resource cannot be found",
-      "back": "Back to home"
+    "errors": {
+      "default": {
+        "title": "(╯°□°)╯︵ ┻━┻",
+        "description": "An error occurred despite all the donger efforts",
+        "back": "Back to home"
+      },
+      "404": {
+        "title": "乁། ˵ ◕ – ◕ ˵ །ㄏ",
+        "description": "The requested resource cannot be found",
+        "back": "Back to home"
+      }
     },
     "login": {
       "form": {

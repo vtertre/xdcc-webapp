@@ -7,8 +7,12 @@ module.exports = function () {
     .config(["$routeProvider", configure]);
 
   function configure($routeProvider) {
-    $routeProvider.when("/404", {
-      templateUrl: "/templates/error/404"
-    });
+    $routeProvider
+      .when("/404", {
+        templateUrl: "/templates/error/404"
+      })
+      .when("/error", {
+        templateUrl: "/templates/error/default"
+      });
   }
 };

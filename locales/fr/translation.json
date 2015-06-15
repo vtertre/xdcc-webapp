@@ -15,10 +15,17 @@
       "log_in": "Se connecter",
       "log_out": "Se déconnecter"
     },
-    "error404": {
-      "title": "乁། ˵ ◕ – ◕ ˵ །ㄏ",
-      "description": "La ressource demandée est introuvable",
-      "back": "Retour à l'accueil"
+    "errors": {
+      "default": {
+        "title": "(╯°□°)╯︵ ┻━┻",
+        "description": "Une erreur s'est produite malgré tous les effort du donger",
+        "back": "Retour à l'accueil"
+      },
+      "404": {
+        "title": "乁། ˵ ◕ – ◕ ˵ །ㄏ",
+        "description": "La ressource demandée est introuvable",
+        "back": "Retour à l'accueil"
+      }
     },
     "login": {
       "form": {
