@@ -56,4 +56,12 @@ describe("The Queue service", function () {
     expect(service.completed).to.have.length(0);
     expect($window.location).to.equal(newPack.url);
   });
+
+  it("must ignore changes when the pack does not change", function () {
+    service.currentPack = {title: "pack", url: "/path/to/pack"};
+    service.currentPack = {title: "pack", url: "/path/to/pack"};
+
+    expect(service.completed).to.have.length(0);
+    expect(service.canceled).to.have.length(0);
+  });
 });

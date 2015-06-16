@@ -28,9 +28,8 @@ Object.defineProperty(QueueService.prototype, "currentPack", {
       if (pack) {
         this.$window.location = pack.url;
       }
+      this._currentPack = pack;
     }
-
-    this._currentPack = pack;
   }
 });
 
