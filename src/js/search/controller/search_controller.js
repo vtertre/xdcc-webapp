@@ -12,9 +12,9 @@ function SearchController($window, Search) {
 
   function search(query) {
     it.loading = true;
-    return Search.search(query).then(function (response) {
+    return Search.search(query).then(function (data) {
       it.loading = false;
-      return response.data;
+      return data;
     });
   }
 

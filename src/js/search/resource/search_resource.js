@@ -6,7 +6,9 @@ module.exports = Search;
 function Search($http) {
   return {
     search: function (query) {
-      return $http.get("/api/search", {params: {q: query}});
+      return $http.get("/api/search", {params: {q: query}}).then(function (response) {
+        return response.data;
+      });
     }
   };
 }

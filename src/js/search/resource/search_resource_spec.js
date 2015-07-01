@@ -5,11 +5,12 @@ var sinon = require("sinon");
 
 describe("Search", function () {
 
-  var $http, resource;
+  var httpResponse, $http, resource;
 
   beforeEach(function () {
+    httpResponse = {data: undefined};
     $http = {
-      get: sinon.stub()
+      get: sinon.stub().returns({then: function (callback) { return callback(httpResponse); }})
     };
     var Search = require("./search_resource");
     resource = new Search($http);
@@ -20,14 +21,15 @@ describe("Search", function () {
   });
 
   it("must send a well formed GET request", function () {
+    httpResponse.data = "data";
     resource.search("query");
 
     expect($http.get).to.have.been.calledWith("/api/search", {params: {q: "query"}});
   });
 
   it("must return the result of the GET request", function () {
-    $http.get.returns("promise");
+    httpResponse.data = "search result";
 
-    expect(resource.search("query")).to.equal("promise");
+    expect(resource.search("query")).to.equal("search result");
   });
 });

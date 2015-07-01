@@ -23,13 +23,13 @@ describe("SearchController", function () {
   });
 
   it("must search and retrieve content based on the query", function () {
-    var response = {data: [{nickname: "heyhello"}, {nickname: "hellohello"}]};
-    Search.search.returns({then: function (callback) { return callback(response); }});
+    var data = [{nickname: "heyhello"}, {nickname: "hellohello"}];
+    Search.search.returns({then: function (callback) { return callback(data); }});
 
     var result = controller.search("hello");
 
     expect(Search.search).to.have.been.calledWith("hello");
-    expect(result).to.deep.equal(response.data);
+    expect(result).to.deep.equal(data);
   });
 
   it("must redirect the user to the page of the selected bot", function () {
