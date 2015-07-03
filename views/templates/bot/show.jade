@@ -1,5 +1,8 @@
 .container
   .row
+    .col-xs-12.col-sm-8.col-sm-offset-2
+      h3.bot-header {{bot.nickname}}
+  .row
     .col-xs-7.col-sm-4.col-xs-offset-1.col-sm-offset-2.search-field
       input.form-control(type="text", placeholder=t("app.bot.search"), ng-model="packFilter")
     .col-xs-4.col-sm-2.sort.btn-group
